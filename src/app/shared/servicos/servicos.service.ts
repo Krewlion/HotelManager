@@ -16,8 +16,8 @@ import swal from 'sweetalert2';
 
 export class Servicos{
   //url:string = 'http://herbertmauadie-001-site2.ctempurl.com/api/';
-  //url:string = 'https://localhost:44354/api/';
-  url:string = 'http://sf72506:8070/api/';
+  url:string = 'https://localhost:44354/api/';
+  //url:string = 'http://sf72506:8070/api/';
   constructor(private menu:MenuService, private http:HttpClient, private loading:LoadingService, private sweet: SweetalertService, private route:Router, private location:Location) {
 
   }
@@ -27,13 +27,15 @@ export class Servicos{
   }
 
   abrirCookie(usuario: IUsuario, route: Router, query:string) {
-    localStorage.setItem('Metanoia', JSON.stringify(usuario));
-    this.menu.exibirNomeClienteNoMenu();
-    this.montarMenu();
+    localStorage.setItem('suareserva', JSON.stringify(usuario));
+    //this.menu.exibirNomeClienteNoMenu();
+    //this.montarMenu();
+    this.menu.logado = true;
+    console.log(query);
     if(query && query != "/"){
       route.navigate([query]);
     }else{
-      route.navigate(['/projeto/consultar']);
+      route.navigate(['/home']);
     }
   }
 
@@ -54,16 +56,10 @@ export class Servicos{
     localStorage.setItem('suareservacarrinho', JSON.stringify(carrinho));
   }
 
-  limparCarrinho() {
-    localStorage.removeItem('suareservacarrinho');
-    localStorage.clear();
-  }
-
   pegarDadosCookie(): IUsuario {
     const usuario: IUsuario = JSON.parse(localStorage.getItem('Metanoia'));
     return usuario;
   }
-
 
   alterarDadosCookie(usuario: IUsuario) {
     localStorage.setItem('Metanoia', JSON.stringify(usuario));

@@ -7,6 +7,7 @@ import { HoteisComponent } from './hoteis/hoteis.component';
 import { SharedModule } from '../shared/shared.module';
 import { CarrinhoComponent } from './carrinho/carrinho.component';
 import { CarrinhoService } from './carrinho/carrinho.service';
+import { LoginComponent } from './cliente/login/login.component';
 
 @NgModule({
   imports: [
@@ -29,6 +30,11 @@ import { CarrinhoService } from './carrinho/carrinho.service';
       {
         path:'carrinho',
         component:CarrinhoComponent
+      }
+      ,
+      {
+        path:'usuario/login',
+        component:LoginComponent
       }
     ])
   ],

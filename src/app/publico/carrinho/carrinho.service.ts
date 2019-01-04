@@ -14,6 +14,7 @@ export class CarrinhoService {
 
   pegarDadosCarrinho(): ICarrinho[] {
     const carrinho: ICarrinho[] = JSON.parse(localStorage.getItem('suareservacarrinho'));
+    this.carrinhos = carrinho;
     return carrinho;
   }
 
@@ -35,6 +36,12 @@ export class CarrinhoService {
     else{
       this.menu.totalitens = "";
     }
+  }
+
+  limparCarrinho() {
+    localStorage.removeItem('suareservacarrinho');
+    localStorage.clear();
+    this.carrinhos = [];
   }
 
 }

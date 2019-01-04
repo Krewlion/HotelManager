@@ -4,6 +4,7 @@ import { MenuService } from 'src/app/menu/menu.service';
 import { Servicos } from 'src/app/shared/servicos/servicos.service';
 import { CarrinhoService } from './carrinho.service';
 import { ICarrinho } from 'src/app/shared/interface/interfaces';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-carrinho',
@@ -20,7 +21,8 @@ export class CarrinhoComponent implements OnInit {
   (
     private menu:MenuService,
     private ser:Servicos,
-    public carrinho:CarrinhoService
+    public carrinho:CarrinhoService,
+    private router:Router
   ) { }
 
   ngOnInit() {
@@ -55,6 +57,10 @@ export class CarrinhoComponent implements OnInit {
       item.datafinal = datafinal.toLocaleDateString("pt-BR");
       this.totaldopedido = this.totaldopedido + (item.valor * item.diarias);
     })
+  }
+
+  redirecionarPagamento(){
+    this.router.navigate(["/privado/cliente/pagamento"]);
   }
 
 }

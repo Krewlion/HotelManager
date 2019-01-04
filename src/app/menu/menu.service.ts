@@ -17,7 +17,7 @@ export class MenuService {
   constructor(private http:HttpClient, private sweet:SweetalertService) { }
 
   menuobs:any[];
-  logado:false;
+  logado:boolean = false;
 
   totalitens:string = "";
 
@@ -70,7 +70,7 @@ export class MenuService {
   }
 
   pegarDadosCookie(): IUsuario {
-    const usuario: IUsuario = JSON.parse(localStorage.getItem('Metanoia'));
+    const usuario: IUsuario = JSON.parse(localStorage.getItem('suareserva'));
     return usuario;
   }
 

@@ -13,6 +13,8 @@ import { FormsModule } from '@angular/forms';
 import { PublicoModule } from './publico/publico.module';
 import { HomeComponent } from '../app/publico/home/home.component'
 import {Servicos} from '../app/shared/servicos/servicos.service';
+import {PagamentoModule} from './privado/cliente/pagamento/pagamento.module';
+
 
 registerLocaleData(localePt, 'pt-BR', localeFrExtra);
 
@@ -24,9 +26,10 @@ registerLocaleData(localePt, 'pt-BR', localeFrExtra);
   ],
   imports: [
     FormsModule,
-    PublicoModule,
     BrowserModule,
     SharedModule,
+    PagamentoModule,
+    PublicoModule,
     RouterModule
     .forRoot([
       {
