@@ -26,7 +26,7 @@ export class CarrinhoComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.carrinho.carrinhos = this.carrinho.pegarDadosCarrinho();
+    this.carrinho.pegarDadosCarrinho();
     this.calcularTotalPedido();
     this.formCarrinho = this.formBuilder.group([
 
@@ -50,13 +50,17 @@ export class CarrinhoComponent implements OnInit {
 
   calcularTotalPedido(){
     this.totaldopedido = 0;
-    this.carrinho.carrinhos.forEach(item=>{
-      var datainicial = new Date(item.datainicial);
-      var datafinal = new Date(item.datafinal);
-      item.datainicial = datainicial.toLocaleDateString("pt-BR");
-      item.datafinal = datafinal.toLocaleDateString("pt-BR");
-      this.totaldopedido = this.totaldopedido + (item.valor * item.diarias);
-    })
+    if(this.carrinho.carrinhos != undefined){
+
+      this.carrinho.carrinhos.forEach(item=>{
+        var datainicial = new Date(item.datainicial);
+        var datafinal = new Date(item.datafinal);
+        item.datainicial = datainicial.toLocaleDateString("pt-BR");
+        item.datafinal = datafinal.toLocaleDateString("pt-BR");
+        this.totaldopedido = this.totaldopedido + (item.valor * item.diarias);
+      })
+
+    }
   }
 
   redirecionarPagamento(){

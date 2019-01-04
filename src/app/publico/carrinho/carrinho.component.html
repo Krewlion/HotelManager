@@ -2,12 +2,12 @@
   <div class="painel">
 
     <h1>Meu carrinho <span class="fas fa-shopping-cart"></span> </h1>
-    <body>
-      <div *ngIf="carrinho.carrinhos.length == 0">
+    <body style="padding-top: 2%;">
+      <div *ngIf="carrinho.carrinhos != undefined && carrinho.carrinhos.length == 0">
           <div class="panel panel-danger">
               <div class="panel-heading">
                 <h2 class="panel-title">
-                  Seu carrinho está vazio
+                  Seu carrinho está vazio <span class="fas fa-shopping-cart"></span>
                 </h2>
               </div>
               <div class="panel-body">

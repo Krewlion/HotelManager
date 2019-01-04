@@ -6,9 +6,9 @@ body {
   margin-top: 8%;
   max-width: 600px;
   height: 320px;
-  color:red;
+  color:rgb(51, 145, 207);
   border-radius: 25px;
-  border: 3px solid yellow;
+  border: 3px solid rgb(47, 0, 255);
   /* background-image: linear-gradient(to bottom, #170e91, #0b0652, #040224, #171163, #0b0652); */
   background-color:transparent;
 }
@@ -18,3 +18,5 @@ body {
 #login .container #login-row #login-column .login-box #login-form #register-link {
   margin-top: -85px;
 }
+
+

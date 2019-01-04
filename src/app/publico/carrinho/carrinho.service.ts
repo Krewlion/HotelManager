@@ -12,22 +12,27 @@ export class CarrinhoService {
 
   carrinhos:ICarrinho[] = [];
 
-  pegarDadosCarrinho(): ICarrinho[] {
+  pegarDadosCarrinho() {
     const carrinho: ICarrinho[] = JSON.parse(localStorage.getItem('suareservacarrinho'));
-    this.carrinhos = carrinho;
-    return carrinho;
+
+    if(carrinho ==undefined){
+      this.carrinhos = [];
+    }
+    else
+    {
+      this.carrinhos = carrinho;
+    }
   }
 
   atualizarDadosCarrinho(carrinho:ICarrinho[]) {
     localStorage.setItem('suareservacarrinho', JSON.stringify(carrinho));
   }
 
-
   atualizarCarrinho(){
-    const carrinho:ICarrinho[] = this.pegarDadosCarrinho();
-    if (carrinho != null){
-      if (carrinho.length > 0){
-        this.menu.totalitens = carrinho.length.toString();
+    this.pegarDadosCarrinho();
+    if (this.carrinhos != null){
+      if (this.carrinhos.length > 0){
+        this.menu.totalitens = this.carrinhos.length.toString();
       }
       else{
         this.menu.totalitens = "";

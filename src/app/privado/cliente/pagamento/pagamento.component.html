@@ -2,17 +2,18 @@
     <div class="painel">
 
       <h1>Meus Cartões <span class="fas fa-credit-card"></span></h1>
-      <body>
+      <body  style="padding-top: 2%;">
         <div *ngIf="carrinho.carrinhos.length == 0">
             <div class="panel panel-danger">
                 <div class="panel-heading">
                   <h2 class="panel-title">
-                    Seu carrinho está vazio
+                    Seu carrinho está vazio <span class="fas fa-shopping-cart"></span>
                   </h2>
                 </div>
                 <div class="panel-body">
                   <div class="form-group">
                     <h3 class="text-danger"> Infelizmente não possui nenhum item em seu carrinho. </h3>
+                    <h4 class="text-danger" >Para selecionar um quarto clique <a routerLink="/home"> aqui <span class="fas fa-plus"></span> </a></h4>
                   </div>
                 </div>
             </div>

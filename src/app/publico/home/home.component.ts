@@ -70,7 +70,7 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  ReiniciarFormCidade() {
+  reiniciarFormCidade() {
     var datas = this.formReservas.get('date');
     this.formReservas = this.fb.group({
       cidade: ["", [Validators.required]],
@@ -80,7 +80,7 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  ReiniciarFormDatas() {
+  reiniciarFormDatas() {
     var cidade = this.formReservas.get('cidade');
     this.formReservas = this.fb.group({
       cidade: [cidade, [Validators.required]],
@@ -135,14 +135,14 @@ export class HomeComponent implements OnInit {
   voltarCidade() {
     this.cidadeSelecionada = false;
     this.cidades = undefined;
-    this.ReiniciarFormCidade();
+    this.reiniciarFormCidade();
     this.iniciarValidadores();
     this.exibirQuartos = false;
     this.enderecos = undefined;
   }
 
   voltarDatas(){
-    this.ReiniciarFormDatas();
+    this.reiniciarFormDatas();
     this.iniciarValidadores();
     this.exibirQuartos = false;
     this.enderecos = undefined;

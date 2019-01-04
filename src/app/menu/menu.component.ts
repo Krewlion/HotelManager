@@ -82,7 +82,7 @@ export class MenuComponent implements OnInit, AfterViewInit {
   }
 
   logar(){
-
+    this.router.navigate(["usuario/login"]);
   }
 
 }

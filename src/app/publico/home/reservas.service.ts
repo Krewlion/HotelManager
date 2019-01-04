@@ -10,73 +10,79 @@ import { ICidade, IEndereco } from 'src/app/shared/interface/interfaces';
   providedIn: 'root'
 })
 
-export class ReservasServicos{
+export class ReservasServicos {
 
-  cidades:Observable<ICidade[]>;
+  cidades: Observable<ICidade[]>;
   exibirLoading = false;
-  enderecos:Observable<IEndereco[]>;
+  enderecos: Observable<IEndereco[]>;
 
-  constructor(private http:HttpClient, private sweet:SweetalertService, private ser:Servicos){
+  constructor(private http: HttpClient, private sweet: SweetalertService, private ser: Servicos) {
 
   }
 
-  listarCidades(cidade:string){
+  listarCidades(cidade: string) {
     this.exibirLoading = true;
-    return this.http.get(this.ser.retornarURL()+"Endereco/ListarCidades?cidade="+cidade)
-    .pipe(
-      map((cidades:ICidade[]) => {
-        if(cidades.length > 0){
-          this.exibirLoading = false;
-          return cidades;
-        }
-        else{
-          this.exibirLoading = false;
-          return undefined;
-        }
-      },
-      (error:any) => {
-        this.sweet.ExibirMensagemCatch(error);
-        return Observable.throw(error.statusText);
-      }),
-      catchError((err, caught) => {
-        console.log('asd');
-        this.sweet.ExibirMensagemCatch(err);
-        return Observable.throw(err.statusText);
-      })
+    return this.http.get(this.ser.retornarURL() + "Endereco/ListarCidades?cidade=" + cidade)
+      .pipe(
+        map((cidades: ICidade[]) => {
+          if (cidades.length > 0) {
+            this.exibirLoading = false;
+            return cidades;
+          }
+          else {
+            this.exibirLoading = false;
+            return undefined;
+          }
+        },
+          (error: any) => {
+            this.sweet.ExibirMensagemCatch(error);
+            return Observable.throw(error.statusText);
+          }),
+        catchError((err, caught) => {
+          this.sweet.ExibirMensagemCatch(err);
+          return Observable.throw(err.statusText);
+        })
 
-    )
+      )
   }
 
-  listarBairros(bairro:string){
+  listarBairros(bairro: string) {
     this.exibirLoading = true;
-    return this.http.get(this.ser.retornarURL()+"Endereco/ListarMunicipios?bairro="+bairro)
-    .pipe(
-      map((enderecos:IEndereco[]) => {
-        if(enderecos.length > 0){
-          this.exibirLoading = false;
-          return enderecos;
-        }
-        else{
-          this.exibirLoading = false;
-          return undefined;
-        }
-      },
-      (error:any) => {
-        this.sweet.ExibirMensagemCatch(error);
-        return Observable.throw(error.statusText);
-      }),
-      catchError((err, caught) => {
-        console.log('asd');
-        this.sweet.ExibirMensagemCatch(err);
-        return Observable.throw(err.statusText);
-      })
+    return this.http.get(this.ser.retornarURL() + "Endereco/ListarMunicipios?bairro=" + bairro)
+      .pipe(
+        map((enderecos: any) => {
+          
+          if (enderecos.erros != undefined) {
+            this.sweet.ExibirMensagemErro(enderecos.erros.join("<br>"));
+            this.exibirLoading = false;
+          } else {
+            if (enderecos.length > 0) {
+              this.exibirLoading = false;
+              return enderecos;
+            }
+            else {
+              this.exibirLoading = false;
+              return undefined;
+            }
 
-    )
+          }
+        },
+          (error: any) => {
+            
+            this.sweet.ExibirMensagemCatch(error);
+            return Observable.throw(error.statusText);
+          }),
+        catchError((err, caught) => {
+          
+          this.sweet.ExibirMensagemCatch(err);
+          return Observable.throw(err.statusText);
+        })
+
+      )
   }
 
-  listarCidadesSubscribe(cidade:string){
-      return this.http.get(this.ser.retornarURL()+"Endereco/ListarCidades?cidade="+cidade);
+  listarCidadesSubscribe(cidade: string) {
+    return this.http.get(this.ser.retornarURL() + "Endereco/ListarCidades?cidade=" + cidade);
   }
-
 
 }
