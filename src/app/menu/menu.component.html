@@ -1,0 +1,40 @@
+<nav id="menu" class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <!-- <img src="../../assets/metanoia.jpg" width=10%; height=10%> -->
+  <a class="navbar-brand" routerLinkActive="active-link-red" routerLink="/home">SuaReverva.com</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+
+    </ul>
+    <form *ngIf="MenuService.logado" class="form-inline my-2 my-lg-0">
+        <span class="fas fa-shopping-cart fa-2x" (click)="logar()" style="color:white"></span>
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              <b id="nomeCliente"></b>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" routerLink="/perfil">Perfil</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" routerLink="/sair">sair</a>
+            </div>
+          </li>
+        </ul>
+        <img width="30px" style="display: none" src="../assets/imagens/clock.gif" id="loadingContador">
+        <!-- <img width="30px" style="display: none" src="../hs/assets/imagens/clock.gif" id="loadingContador"> -->
+        <input class="form-control mr-sm-2" type="text" id="contador" readonly="readonly" aria-label="Search">
+    </form>
+
+    <form *ngIf="!MenuService.logado" class="form-inline-2 my-2 my-lg-0">
+
+       <button class="btn btn-info" (click)="logar()" > <span  style="color:white"> Entrar</span> </button>
+        <button class="btn btn-info" > <span style="color:white"> Cadastrar</span></button>
+
+    </form>
+
+  </div>
+</nav>

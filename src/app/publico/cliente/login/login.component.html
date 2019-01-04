@@ -1,0 +1,28 @@
+
+<body>
+  <div id="login">
+    <h3 class="text-center text-primary pt-5"><img style="width: 20%" src="../../assets/metanoia.jpg" ></h3>
+    <div class="container">
+        <div id="login-row" class="row justify-content-center align-items-center">
+            <div id="login-column" class="col-md-6">
+                <div class="login-box col-md-12">
+                    <form id="login-form" [formGroup]="form" class="form" action="" method="post">
+                        <h3 class="text-center text-white">Login de Acesso</h3>
+                        <div class="form-group">
+                            <label for="username" ><span title="Usuario" class="fa fa-users"></span></label><br>
+                            <input type="text" placeholder="Usuario" (keyup)="keyUp($event)" formControlName ="loginusuario" autofocus class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="password" ><span title="Senha" class="fa fa-lock"></span></label><br>
+                            <input type="password" placeholder="Senha" (keyup)="keyUp($event)" formControlName="senha" class="form-control">
+                        </div>
+                        <div class="form-group">
+                          <button  name="btnLogar" class="btn btn-success btn-md" title="Entrar" (click)="Entrar()" type="button">Entrar <span class="fa fa-unlock"></span></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>

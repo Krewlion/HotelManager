@@ -1,0 +1,39 @@
+.modal-content {
+  position: relative;
+  display: -ms-flexbox;
+  border:0px;
+  display: -webkit-box;
+  display: flex;
+  -ms-flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  flex-direction: column;
+  width: 100%;
+  pointer-events: auto;
+  background-color: transparent;
+  outline: 0;
+}
+
+.load{
+  position: fixed;
+  width: 40%;
+  height: 40%;
+  top: 0;
+  padding-top: 10%;
+  left: 25%;
+  background-color:transparent;
+  opacity: 0.95;
+}
+
+.modal-dialog {
+  position: relative;
+  -ms-flex: 1 1 auto;
+  -webkit-box-flex: 1;
+  flex: 1 1 auto;
+  padding: 1rem;
+  top:25%;
+
+}
+.load:hover:after{
+  opacity: 1;
+}

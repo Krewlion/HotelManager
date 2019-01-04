@@ -1,0 +1,106 @@
+<form [formGroup]="formReservas">
+  <div class="painel">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title"></h3>
+      </div>
+      <div class="panel-body">
+        <div class="form-group" *ngIf="!cidadeSelecionada">
+          <h3> <span class="fas fa-city"></span> Pesquise e escolha o que de melhor a cidade tem a oferecer <span class="fas fa-landmark"></span></h3>
+          <h4>Selecione a cidade que deseja <span class="fas fa-map-marked-alt"></span></h4>
+          <div class="row">
+            <div class="col-md-6">
+              <input type="text" autofocus formControlName="cidade" class="form-control search-result">
+              <div class="text-danger" [innerHTML]="erroCidade"></div>
+            </div>
+            <div class="col-md-6" *ngIf="reservaService.exibirLoading">
+              <img src="../../../assets/Rolling-0.6s-200px.gif" width="50px" height="50px">
+            </div>
+            <div class="search-result" *ngIf="enderecos != undefined">
+              <ul>
+                <li *ngFor="let endereco of enderecos | async">
+                  <a (click)="selecionarBairro(endereco)"> {{endereco.bairro}} - {{endereco.cidade}}</a>
+                </li>
+              </ul>
+            </div>
+            <br>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group" *ngIf="cidadeSelecionada">
+              <div class="card" style="width: 18rem;">
+                <div class="card-header">
+                  {{endereco.cidade}}
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">{{endereco.cidade}}</h5>
+                  <p class="card-text">{{endereco.bairro}}</p>
+                  <a (click)="voltarCidade()" class="links">Alterar <span class="fa fa-refresh fa-2x"></span></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group" *ngIf="cidadeSelecionada">
+              <h4>Selecione o período da reserva </h4>
+              <div class="row">
+                <div class="col-sm-1">
+                  <label for="date"><span class="fas fa-calendar-alt fa-2x"></span></label>
+                </div>
+                <div class="col-md-6">
+                  <p-calendar required showButtonBar="true" [minDate]="minDateValue" [locale]="en" id="date" dateFormat="dd/mm/yy"
+                    class="calendar" selectionMode="range" formControlName="date"></p-calendar>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <button type="button" [disabled]="!this.formReservas.valid" (click)="pesquisarDatas()" class="btn btn-success"><span
+                      class="fas fa-search"></span> Consultar</button>
+                  <button type="button" [disabled]="!cidadeSelecionada" (click)="voltarDatas()" class="btn btn-danger"><span
+                      class="fas fa-undo"></span> Desfazer</button>
+                </div>
+                <div class="col-md-2">
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group" *ngIf="exibirQuartos">
+          <hr>
+          <div class="row">
+            <div class="col-md-6" *ngFor="let quarto of quartos">
+              <div class="card card-hotel" style="width: 18rem;margin-bottom: 4%; margin-left: 2%;">
+                <div class="card-header">
+                  {{quarto.nomeempresa}}
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <img src={{quarto.foto}} style="margin-top:6%; margin-left:6%; width: 220px; height: 150px;">
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body">
+                      <p class="card-text"><span class="fas fa-money-check-alt"></span> {{quarto.valor}}</p>
+                      <p class="card-text"><span class="fas fa-wind"></span> Ar condionado: {{quarto.arcondicionado ?
+                        "Sim" : "Não" }}</p>
+                      <p class="card-text"> <span class="fas fa-bed"></span> Solteiro : {{quarto.camasolteiro}}</p>
+                      <p class="card-text"><span class="fas fa-bed"></span> Casal : {{quarto.camacasal}}</p>
+                      <p class="card-text"><span class="fas fa-map-marked-alt"></span> {{quarto.endereco}}</p>
+                      <p class="card-text"><span class="fas fa-room"></span> Quarto: {{quarto.quarto}}</p>
+
+                      <a class="links"><span title="detalhes" (click)="detalhar(quarto.imagens)" style="margin-right: 2%"
+                          class="fas fa-info-circle fa-2x"></span></a>
+                      <a class="links"><span title="escolher" class="fas fa-check-circle fa-2x"></span></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
