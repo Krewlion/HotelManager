@@ -5,6 +5,8 @@ import { RouterModule } from '@angular/router';
 import { SobreComponent } from './sobre/sobre.component';
 import { HoteisComponent } from './hoteis/hoteis.component';
 import { SharedModule } from '../shared/shared.module';
+import { CarrinhoComponent } from './carrinho/carrinho.component';
+import { CarrinhoService } from './carrinho/carrinho.service';
 
 @NgModule({
   imports: [
@@ -23,8 +25,14 @@ import { SharedModule } from '../shared/shared.module';
         path:'hoteis',
         component: HoteisComponent
       }
+      ,
+      {
+        path:'carrinho',
+        component:CarrinhoComponent
+      }
     ])
   ],
-  declarations: [HomeComponent, SobreComponent, HoteisComponent]
+  declarations: [HomeComponent, SobreComponent, HoteisComponent, CarrinhoComponent],
+  providers:[CarrinhoService]
 })
 export class PublicoModule { }

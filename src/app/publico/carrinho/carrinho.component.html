@@ -1,0 +1,77 @@
+<form [formGroup]="formCarrinho">
+  <div class="painel">
+
+    <h1>Meu carrinho <span class="fas fa-shopping-cart"></span> </h1>
+
+    <body>
+
+      <div *ngIf="carrinho.carrinhos.length == 0">
+          <div class="panel panel-danger">
+              <div class="panel-heading">
+                <h2 class="panel-title">
+                  Seu carrinho está vazio
+                </h2>
+              </div>
+              <div class="panel-body">
+                <div class="form-group">
+                  <h3 class="text-danger"> Infelizmente não possui nenhum item em seu carrinho. </h3>
+                </div>
+              </div>
+          </div>
+      </div>
+
+      <div *ngIf="carrinho.carrinhos.length > 0">
+        <div class="row">
+          <div class="col-md-8">
+            <div [ngClass]="i == 0 ? 'row-cart-first' : '' " class="row row-cart" *ngFor="let item of carrinho.carrinhos; index as i">
+              <div class="col-md-1">
+                <span title="Data Inicial" class="fas fa-calendar"></span> {{item.datainicial}}
+              </div>
+              <div class="col-md-1">
+                <span title="Data Final" class="fas fa-calendar"></span> {{item.datafinal}}
+              </div>
+              <div class="col-md-2">
+                  <span title="Data Inicial" class="fas fa-calendar"></span> {{item.nomehotel}}
+                </div>
+              <div class="col-md-2">
+                <span title="Diárias" class="fas fa-clock"></span> {{item.diarias}}
+              </div>
+              <div class="col-md-2">
+                <span title="Valor da Diária" class="fas fa-money"></span> {{item.valor |
+                currency:'R$':'symbol':'':'pt-BR'}}
+              </div>
+              <div class="col-md-2">
+                <span title="Valor Total" class="fas fa-money"></span> {{item.diarias * item.valor |
+                currency:'R$':'symbol':'':'pt-BR'}}
+              </div>
+              <div class="col-md-2">
+                <span title="Remover" (click)="removerDoCarrinho(item)" style="color:red; cursor:pointer;" class="fas fa-times fa-2x"></span>
+              </div>
+            </div>
+
+          </div>
+          <div class="col-md-4">
+            <div class="card card-hotel" style="width: 18rem;margin-bottom: 4%; margin-left: 2%;">
+              <div class="card-header">
+                Resumo do Pedido
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="card-body" *ngFor="let item of carrinho.carrinhos">
+                    <p class="card-text"><span class="fas fa-money"></span> {{item.diarias * item.valor |
+                      currency:'R$':'symbol':'':'pt-BR'}}</p>
+                  </div>
+                </div>
+              </div>
+              <hr>
+              <div class="card-footer">
+                {{totaldopedido | currency:'R$':'symbol':'':'pt-BR'}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </body>
+  </div>
+</form>

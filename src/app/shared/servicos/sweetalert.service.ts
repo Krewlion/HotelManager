@@ -7,7 +7,7 @@ import { ValidadorService } from 'src/app/shared/servicos/validador.service';
 import { debounceTime, map } from 'rxjs/operators';
 import { Servicos } from 'src/app/shared/servicos/servicos.service';
 import { Observable } from 'rxjs';
-import { ICidade } from 'src/app/shared/interface/interfaces';
+import { ICidade, ICarrinho } from 'src/app/shared/interface/interfaces';
 import { LoadingService } from 'src/app/shared/loading/loading.service';
 
 @Injectable({
@@ -74,24 +74,81 @@ export class SweetalertService {
 
 
   ExibirGaleria(imagens:string[]){
-
-
     var html = "<mdb-carousel class='carousel slide carousel-fade' [animation]='fade'>";
-
-
     imagens.forEach(element=>{
-      console.log(element);
       html = html + "<mdb-carousel-item> <div class='view w-100'> <img class='d-block w-100' src="+element+"> <div class='mask rgba-black-light waves-light' mdbWavesEffect></div> </div> <div class='carousel-caption'> <h3 class='h3-responsive'>Light mask</h3> <p>First text</p> </div> </mdb-carousel-item>";
     });
-    console.log(html);
-
     html = html +  "</mdb-carousel>";
-
-    console.log(html);
-
     swal({
       html: html,
       confirmButtonText: 'Fechar'
+    })
+  }
+
+
+
+  ExibirConfirmacaoCarrinho(carrinho:ICarrinho){
+
+    var data = new Date(carrinho.datainicial);
+    var datafinal = new Date(carrinho.datafinal);
+    swal({
+      title: 'Deseja adicionar esse item ao carrinho?',
+      html: `
+        Entrada : ${data.toLocaleDateString('pt-BR')} <br>
+        Saída : ${datafinal.toLocaleDateString('pt-BR')} <br>
+        Hotel : ${carrinho.nomehotel} <br>
+        R$ diária : ${carrinho.valor} <br>
+        Diária(s) : ${carrinho.diarias} <br>
+        R$ Final : ${carrinho.valor * carrinho.diarias}  <br>
+      `,
+      type: 'warning',
+      showCancelButton: true,
+      cancelButtonText: "Não",
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sim, adicionar!'
+    }).then((result) => {
+
+      if (result.value) {
+
+        let carrinhos: ICarrinho[] = JSON.parse(localStorage.getItem('suareservacarrinho'));
+        if (carrinhos == undefined){
+          carrinhos = [];
+        }
+
+        carrinhos.push(carrinho)
+
+        localStorage.setItem('suareservacarrinho', JSON.stringify(carrinhos));
+        swal(
+          'Sucesso!',
+          'O item selecionado foi adicionado ao carrinho.',
+          'success'
+        )
+      }
+    })
+
+  }
+
+  ExibirConfirmacaoCarrinhoObservable(carrinho:ICarrinho){
+
+    var data = new Date(carrinho.datainicial);
+    var datafinal = new Date(carrinho.datafinal);
+    return swal({
+      title: 'Deseja adicionar esse item ao carrinho?',
+      html: `
+        Entrada : ${data.toLocaleDateString('pt-BR')} <br>
+        Saída : ${datafinal.toLocaleDateString('pt-BR')} <br>
+        Hotel : ${carrinho.nomehotel} <br>
+        R$ diária : ${carrinho.valor.toLocaleString("pt-BR")} <br>
+        Diária(s) : ${carrinho.diarias} <br>
+        R$ Final : ${(carrinho.valor * carrinho.diarias).toLocaleString("pt-BR")}  <br>
+      `,
+      type: 'warning',
+      showCancelButton: true,
+      cancelButtonText: "Não, obrigado",
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sim, adicionar!'
     })
   }
 

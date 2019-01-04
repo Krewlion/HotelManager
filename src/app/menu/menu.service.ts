@@ -19,6 +19,8 @@ export class MenuService {
   menuobs:any[];
   logado:false;
 
+  totalitens:string = "";
+
   private _tempoSesssao: number;
   public get tempoSesssao(): number {
 

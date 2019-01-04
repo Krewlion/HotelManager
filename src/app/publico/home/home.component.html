@@ -6,7 +6,7 @@
       </div>
       <div class="panel-body">
         <div class="form-group" *ngIf="!cidadeSelecionada">
-          <h3> <span class="fas fa-city"></span> Pesquise e escolha o que de melhor a cidade tem a oferecer <span class="fas fa-landmark"></span></h3>
+          <h3> <span class="fas fa-city"></span> Pesquise e escolha os hotéis que a cidade tem a oferecer <span class="fas fa-landmark"></span></h3>
           <h4>Selecione a cidade que deseja <span class="fas fa-map-marked-alt"></span></h4>
           <div class="row">
             <div class="col-md-6">
@@ -41,29 +41,43 @@
               </div>
             </div>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-8">
+
             <div class="form-group" *ngIf="cidadeSelecionada">
-              <h4>Selecione o período da reserva </h4>
               <div class="row">
                 <div class="col-sm-1">
-                  <label for="date"><span class="fas fa-calendar-alt fa-2x"></span></label>
+                  <label for="date"><span style="margin-top: 80%;margin-left: 175%" class="fas fa-calendar-alt fa-2x"></span></label>
                 </div>
                 <div class="col-md-6">
+                  <label>Período</label>
                   <p-calendar required showButtonBar="true" [minDate]="minDateValue" [locale]="en" id="date" dateFormat="dd/mm/yy"
                     class="calendar" selectionMode="range" formControlName="date"></p-calendar>
                 </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <button type="button" [disabled]="!this.formReservas.valid" (click)="pesquisarDatas()" class="btn btn-success"><span
-                      class="fas fa-search"></span> Consultar</button>
-                  <button type="button" [disabled]="!cidadeSelecionada" (click)="voltarDatas()" class="btn btn-danger"><span
-                      class="fas fa-undo"></span> Desfazer</button>
+                <div class="col-md-5">
+                  <label>Hóspedes?</label>
+                  <input type="number" formControlName="qtdhospedes" class="form-control" >
+                  <div [innerHTML]="erroQtdhospedes" class="text-danger"></div>
+                  <!-- <label>Nome Hotel</label>
+                    <input type="text" formControlName="nomehotel" class="form-control" > -->
                 </div>
-                <div class="col-md-2">
+              </div>
+              <hr>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <div class="form-group" *ngIf="cidadeSelecionada">
+          <div class="row">
 
-                </div>
-              </div>
+            <div class="col-md-6">
+              <label>Nome Hotel</label>
+              <input type="text" formControlName="nomehotel" class="form-control">
+            </div>
+            <div class="col-md-6">
+                <button type="button" [disabled]="!this.formReservas.valid" (click)="pesquisarDatas()" class="btn btn-success"><span
+                  class="fas fa-search"></span> Consultar</button>
+              <button type="button" [disabled]="!cidadeSelecionada" (click)="voltarDatas()" class="btn btn-danger"><span
+                  class="fas fa-undo"></span> Desfazer</button>
             </div>
           </div>
         </div>
@@ -82,17 +96,23 @@
                   </div>
                   <div class="col-md-8">
                     <div class="card-body">
+                      <p class="card-text"><span class="fas fa-asterisk"></span> <b> Quarto: {{quarto.quarto}} - {{quarto.andar
+                          == '0' ? 'Térreo' : quarto.andar +'° andar'}} </b> <span class="fas fa-asterisk"></span> </p>
                       <p class="card-text"><span class="fas fa-money-check-alt"></span> {{quarto.valor}}</p>
                       <p class="card-text"><span class="fas fa-wind"></span> Ar condionado: {{quarto.arcondicionado ?
                         "Sim" : "Não" }}</p>
+                      <p class="card-text"><span class="fas fa-wind"></span> Ventilador: {{quarto.ventilador == true ? "Sim" : "Não"}}</p>
                       <p class="card-text"> <span class="fas fa-bed"></span> Solteiro : {{quarto.camasolteiro}}</p>
                       <p class="card-text"><span class="fas fa-bed"></span> Casal : {{quarto.camacasal}}</p>
                       <p class="card-text"><span class="fas fa-map-marked-alt"></span> {{quarto.endereco}}</p>
-                      <p class="card-text"><span class="fas fa-room"></span> Quarto: {{quarto.quarto}}</p>
 
+                      <p class="card-text"><span class="fas fa-toilet-paper"></span> Banheiro: {{quarto.banheiroprivativo == true ? "Privativo" : "Compartilhado"}}</p>
+                      <p class="card-text"><span class="fas fa-users"></span> Max. Hóspedes: {{quarto.qtdhospedes}}</p>
+                      <p class="card-text"><span class="fas fa-clock"></span> Entrada - {{quarto.checkin}}</p>
+                      <p class="card-text"><span class="fas fa-clock"></span> Saída: {{quarto.checkout}}</p>
                       <a class="links"><span title="detalhes" (click)="detalhar(quarto.imagens)" style="margin-right: 2%"
                           class="fas fa-info-circle fa-2x"></span></a>
-                      <a class="links"><span title="escolher" class="fas fa-check-circle fa-2x"></span></a>
+                      <a class="links"><span title="escolher" (click)="selecionar(quarto)" class="fas fa-check-circle fa-2x"></span></a>
                     </div>
                   </div>
                 </div>

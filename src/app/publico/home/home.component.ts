@@ -6,11 +6,13 @@ import { Servicos } from 'src/app/shared/servicos/servicos.service';
 import { HttpClient } from '@angular/common/http';
 import { ReservasServicos } from './reservas.service';
 import { Observable } from 'rxjs';
-import { ICidade, IEndereco } from 'src/app/shared/interface/interfaces';
+import { ICidade, IEndereco, ICarrinho } from 'src/app/shared/interface/interfaces';
 import { SweetalertService } from 'src/app/shared/servicos/sweetalert.service';
 import { LoadingService } from 'src/app/shared/loading/loading.service';
 import swal from 'sweetalert2';
 import { ImagemService } from 'src/app/shared/imagens/imagem.service';
+import { MenuService } from 'src/app/menu/menu.service';
+import { CarrinhoService } from '../carrinho/carrinho.service';
 
 
 @Component({
@@ -40,6 +42,7 @@ export class HomeComponent implements OnInit {
 
   erroDataInicial: string = "";
   erroCidade: string = "";
+  erroQtdhospedes:string = "";
 
   constructor
   (
@@ -50,6 +53,8 @@ export class HomeComponent implements OnInit {
     private sweet:SweetalertService,
     private loading:LoadingService,
     private imagem:ImagemService,
+    private MenuService:MenuService,
+    private carrinho:CarrinhoService
   ) {
     var currentTime = new Date()
     this.minDateValue = currentTime ;
@@ -59,7 +64,9 @@ export class HomeComponent implements OnInit {
   inicializarForm() {
     this.formReservas = this.fb.group({
       cidade: ["", [Validators.required]],
-      date:["", Validators.required]
+      date:["", Validators.required],
+      nomehotel:[""],
+      qtdhospedes:["1", this.validador.ValidadorNumeroMaiorQue0]
     });
   }
 
@@ -67,16 +74,19 @@ export class HomeComponent implements OnInit {
     var datas = this.formReservas.get('date');
     this.formReservas = this.fb.group({
       cidade: ["", [Validators.required]],
-      date:datas
+      date:datas,
+      nomehotel : [""],
+      qtdhospedes:[this.formReservas.get("qtdhospedes").value,, this.validador.ValidadorNumeroMaiorQue0]
     });
   }
-
 
   ReiniciarFormDatas() {
     var cidade = this.formReservas.get('cidade');
     this.formReservas = this.fb.group({
       cidade: [cidade, [Validators.required]],
-      date:["", Validators.required]
+      date:["", Validators.required],
+      nomehotel:[""],
+      qtdhospedes:[this.formReservas.get("qtdhospedes").value,, this.validador.ValidadorNumeroMaiorQue0]
     });
   }
 
@@ -99,12 +109,17 @@ export class HomeComponent implements OnInit {
             }
           })
         }
-
       },
-
       (error:any)=>{
         this.sweet.ExibirMensagemCatch(error);
       });
+
+      const qtdHospedeControl = this.formReservas.get("qtdhospedes");
+
+      qtdHospedeControl.valueChanges.subscribe(qtd=>{
+        this.erroQtdhospedes = this.validador.setMessage(qtdHospedeControl,this.validador.mensagensValidacao());
+      });
+
   }
 
   selecionarCidade(cidade: ICidade) {
@@ -158,7 +173,7 @@ export class HomeComponent implements OnInit {
     datas.forEach(element => {
       data.push(element);
     });
-    this.http.get(this.ser.retornarURL()+"Reserva/PesquisarQuartosParaReservaPelaData?datas="+datas+"&cdcidade="+this.endereco.cdcidade+"&cdbairro="+this.endereco.cdbairro)
+    this.http.get(this.ser.retornarURL()+"Reserva/PesquisarQuartosParaReservaPelaData?datas="+datas+"&cdcidade="+this.endereco.cdcidade+"&cdbairro="+this.endereco.cdbairro+"&hotel="+this.formReservas.get("nomehotel").value +"&hospedes="+this.formReservas.get("qtdhospedes").value)
     .subscribe((resultado:any)=>{
       if ( resultado.erros == undefined){
 
@@ -167,6 +182,7 @@ export class HomeComponent implements OnInit {
           this.exibirQuartos = true;
         }
         else{
+          this.quartos = undefined;
           this.sweet.ExibirMensagemAviso("Nenhum quarto disponível foi encontrado com os parametros passados.");
         }
       }
@@ -194,6 +210,46 @@ export class HomeComponent implements OnInit {
     else{
       this.sweet.ExibirMensagemAviso("O quarto selecionando não possui imagens.");
     }
+  }
+
+  selecionar(quarto:any){
+
+    let carrinho:ICarrinho = <ICarrinho> {} ;
+    carrinho.idquarto = quarto.idquarto;
+    var datas = this.formReservas.get('date').value;
+    carrinho.datainicial = datas[0];
+    carrinho.datafinal = datas[1];
+    carrinho.valor = quarto.valor;
+    var date1 = new Date(datas[0]);
+    var date2 = new Date(datas[1]);
+    var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+    console.log(timeDiff);
+    var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+    carrinho.nomehotel = quarto.hotel;
+    carrinho.diarias = diffDays + 1;
+    //this.sweet.ExibirConfirmacaoCarrinho(carrinho);
+
+    this.sweet.ExibirConfirmacaoCarrinhoObservable(carrinho).then((result) => {
+
+      if (result.value) {
+
+        let carrinhos: ICarrinho[] = JSON.parse(localStorage.getItem('suareservacarrinho'));
+        if (carrinhos == undefined){
+          carrinhos = [];
+        }
+
+        carrinhos.push(carrinho)
+
+        localStorage.setItem('suareservacarrinho', JSON.stringify(carrinhos));
+        this.carrinho.atualizarCarrinho();
+        swal(
+          'Sucesso!',
+          'O item selecionado foi adicionado ao carrinho.',
+          'success'
+        )
+      }
+    })
+
 
   }
 

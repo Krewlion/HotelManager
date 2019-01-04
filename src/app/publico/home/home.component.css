@@ -4875,7 +4875,7 @@ a:not([href]):not([tabindex]) {
 }
 
 .calendar{
-  border: 1px solid #ccc;
+  border: 0px solid #ccc;
   width: 100%;
   margin-top:0.1%;
   background-color: white;

@@ -5,6 +5,8 @@ import { MenuService } from './menu.service';
 import { LoadingService } from '../shared/loading/loading.service';
 import { SweetalertService } from '../shared/servicos/sweetalert.service';
 import { HttpClient } from '@angular/common/http';
+import { ICarrinho } from '../shared/interface/interfaces';
+import { CarrinhoService } from '../publico/carrinho/carrinho.service';
 
 @Component({
   selector: 'app-menu',
@@ -40,13 +42,23 @@ export class MenuComponent implements OnInit, AfterViewInit {
     this.router.navigate(['/login']);
   }
 
-  constructor(private ser:Servicos ,private http:HttpClient,private loading:LoadingService, private sweet:SweetalertService, private router:Router, public MenuService:MenuService) {}
+  constructor
+  (
+    private ser:Servicos,
+    private carrinho:CarrinhoService,
+    private http:HttpClient,
+    private loading:LoadingService,
+    private sweet:SweetalertService,
+    private router:Router,
+    public MenuService:MenuService
+  ) {}
 
   ngOnInit() {
-
+    this.carrinho.atualizarCarrinho();
   }
 
   ngAfterViewInit(){
+
     // const usuariologado = this.MenuService.pegarDadosCookie();
     // if (usuariologado == undefined) {
     // } else {

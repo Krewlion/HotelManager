@@ -293,7 +293,7 @@ ValidarNumerosDecimais(valor){
   }
 
   ValidadorNumeroMaiorQue0 (c:AbstractControl) : {[key:string]:boolean} | null{
-    var valor = c.value.replace(",",".");
+    var valor = c.value.toString().replace(",",".");
     if (!isNaN(valor)){
       if (valor > 0){
         return null;
