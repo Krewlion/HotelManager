@@ -3,7 +3,6 @@ import { LOCALE_ID, NgModule } from '@angular/core';
 import localeFrExtra from '@angular/common/locales/extra/br';
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
-
 import { AppComponent } from './app.component';
 import { LoginComponent } from './publico/cliente/login/login.component';
 import { SharedModule } from './shared/shared.module';
@@ -14,6 +13,8 @@ import { PublicoModule } from './publico/publico.module';
 import { HomeComponent } from '../app/publico/home/home.component'
 import {Servicos} from '../app/shared/servicos/servicos.service';
 import {PagamentoModule} from './privado/cliente/pagamento/pagamento.module';
+import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 
 registerLocaleData(localePt, 'pt-BR', localeFrExtra);
@@ -27,6 +28,7 @@ registerLocaleData(localePt, 'pt-BR', localeFrExtra);
   imports: [
     FormsModule,
     BrowserModule,
+    NgxDaterangepickerMd,
     SharedModule,
     PagamentoModule,
     PublicoModule,
@@ -41,6 +43,7 @@ registerLocaleData(localePt, 'pt-BR', localeFrExtra);
         component:HomeComponent,
       },
       ]),
+    BsDatepickerModule.forRoot(),
   ],
   providers: [Servicos,
   {

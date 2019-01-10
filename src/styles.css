@@ -335,3 +335,42 @@ h3{
 .ui-calendar{
   width: 100% !important;
 }
+
+
+.panel-info {
+  border-color: #bce8f1 !important;
+  }
+  .panel-info > .panel-heading {
+  color: #31708f !important;
+  background-color: #d9edf7 !important;
+  border-color: #bce8f1 !important;
+  }
+  .panel-info > .panel-heading + .panel-collapse > .panel-body {
+  border-top-color: #bce8f1 !important;
+  }
+  .panel-info > .panel-heading .badge {
+  color: #d9edf7;
+  background-color: #31708f !important;
+  }
+  .panel-info > .panel-footer + .panel-collapse > .panel-body {
+  border-bottom-color: #bce8f1 !important;
+  }
+
+  .panel-primary {
+    border-color: #337ab7;
+    }
+    .panel-primary > .panel-heading {
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #337ab7;
+    }
+    .panel-primary > .panel-heading + .panel-collapse > .panel-body {
+    border-top-color: #337ab7;
+    }
+    .panel-primary > .panel-heading .badge {
+    color: #337ab7;
+    background-color: #fff;
+    }
+    .panel-primary > .panel-footer + .panel-collapse > .panel-body {
+    border-bottom-color: #337ab7;
+    }

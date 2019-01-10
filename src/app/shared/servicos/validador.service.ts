@@ -256,7 +256,10 @@ ValidarNumerosDecimais(valor){
       nan:"Apenas números permitidos",
       rangeporcentagem:"O valor precisa estar entre 0 e 100.",
       numero:"Apenas números nesse campo.",
-      maiorquezero: "Apenas números maiores que 0."
+      maiorquezero: "Apenas números maiores que 0.",
+      rangeDateNull: "Nenhum período foi selecionado.",
+      rangeDateInicial: "Nenhum período foi selecionado",
+      rangeDateFinal: "A data final precisa ser selecionada."
     }
   }
 
@@ -305,6 +308,30 @@ ValidarNumerosDecimais(valor){
     }
     else{
       return {maiorquezero:true};
+    }
+  }
+
+  ValidarDatasEmRange (c:AbstractControl) : {[key:string]:boolean} | null {
+    var datas = c.get("date").value;
+
+    if (datas == undefined){
+      return { rangeDateNull : true }
+    }
+    else{
+      var datainicial = datas[0];
+      var datafinal = datas[1];
+      if (datainicial == undefined){
+        return {rangeDateInicial:true}
+      }
+      else{
+        if (datafinal == undefined){
+          return {rangeDateFinal:true};
+        }
+        else{
+          return null;
+        }
+      }
+
     }
   }
 

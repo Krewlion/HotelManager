@@ -15,7 +15,7 @@ import swal from 'sweetalert2';
 })
 
 export class Servicos{
-  //url:string = 'http://herbertmauadie-001-site2.ctempurl.com/api/';
+  //url:string = 'http://herbertmauadie-001-site4.ctempurl.com/api/';
   url:string = 'https://localhost:44354/api/';
   //url:string = 'http://sf72506:8070/api/';
   constructor(private menu:MenuService, private http:HttpClient, private loading:LoadingService, private sweet: SweetalertService, private route:Router, private location:Location) {
@@ -27,11 +27,10 @@ export class Servicos{
   }
 
   abrirCookie(usuario: IUsuario, route: Router, query:string) {
+
+    var expirarem = (new Date().getTime()) + (60000 * 30);
     localStorage.setItem('suareserva', JSON.stringify(usuario));
-    //this.menu.exibirNomeClienteNoMenu();
-    //this.montarMenu();
     this.menu.logado = true;
-    console.log(query);
     if(query && query != "/"){
       route.navigate([query]);
     }else{
@@ -39,16 +38,14 @@ export class Servicos{
     }
   }
 
-
-
   limparCookie(route: Router) {
-    localStorage.removeItem('Metanoia');
+    localStorage.removeItem('suareserva');
     localStorage.clear();
     route.navigate(['/login']);
   }
 
   limparCookieSemRoute() {
-    localStorage.removeItem('Metanoia');
+    localStorage.removeItem('suareserva');
     localStorage.clear();
   }
 
@@ -56,13 +53,13 @@ export class Servicos{
     localStorage.setItem('suareservacarrinho', JSON.stringify(carrinho));
   }
 
-  pegarDadosCookie(): IUsuario {
-    const usuario: IUsuario = JSON.parse(localStorage.getItem('Metanoia'));
+  pegarDadosCookie(): any {
+    const usuario = JSON.parse(localStorage.getItem('suareserva'));
     return usuario;
   }
 
   alterarDadosCookie(usuario: IUsuario) {
-    localStorage.setItem('Metanoia', JSON.stringify(usuario));
+    localStorage.setItem('suareserva', JSON.stringify(usuario));
   }
 
   voltar(){
@@ -87,29 +84,6 @@ export class Servicos{
     ()=>{
       this.loading.esconderLoading();
     });
-  }
-
-  detalharSubContratoPeloID(idsubcontrato:number){
-    return this.http.get(this.retornarURL()+"subcontrato/DetalharSubContratoPeloID?idsubcontrato="+idsubcontrato+"&idusuario="+this.pegarDadosCookie().idusuario);
-  }
-
-  listarEspecialidades(){
-    return this.http.get(this.retornarURL()+"Especialidade/ConsultarEspecialidades");
-  }
-
-  listarStatus(){
-    return this.http.get(this.retornarURL()+"Servico/ListarStatus").pipe(
-      map((status:any) => {
-        return status;
-      },
-      (error:any) => {
-        this.sweet.ExibirMensagemCatch(error);
-      })
-    )
-  }
-
-  listarTiposDocs(){
-    return this.http.get(this.retornarURL()+"TipoDoc/ConsultarTiposDocs");
   }
 }
 

@@ -1,9 +1,9 @@
-<form [formGroup]="formPagamento">
+<form [formGroup]="formPagamento" (ngSubmit)="realizarPagamento()">
     <div class="painel">
 
       <h1>Meus Cartões <span class="fas fa-credit-card"></span></h1>
       <body  style="padding-top: 2%;">
-        <div *ngIf="carrinho.carrinhos.length == 0">
+        <div *ngIf="carrinho.carrinhos == undefined">
             <div class="panel panel-danger">
                 <div class="panel-heading">
                   <h2 class="panel-title">
@@ -19,28 +19,28 @@
             </div>
         </div>
 
-        <div *ngIf="carrinho.carrinhos.length > 0">
+        <div *ngIf="carrinho.carrinhos != undefined">
           <div class="row">
             <div class="col-md-9">
-              <div [ngClass]="i == 0 ? 'row-cart-first' : '' " class="row row-cart" *ngFor="let item of carrinho.carrinhos; index as i">
+              <div class="row">
                 <div class="col-md-2">
-                  <span title="Entrada" class="fas fa-calendar"></span> {{item.datainicial}}
+                  <span title="Entrada" class="fas fa-calendar"></span> {{carrinho.carrinhos.datainicial}}
                 </div>
                 <div class="col-md-2">
-                  <span title="Saída" class="fas fa-calendar"></span> {{item.datafinal}}
+                  <span title="Saída" class="fas fa-calendar"></span> {{carrinho.carrinhos.datafinal}}
                 </div>
                 <div class="col-md-2">
-                    <span title="Hotel" class="fas fa-calendar"></span> {{item.nomehotel}}
+                    <span title="Hotel" class="fas fa-calendar"></span> {{carrinho.carrinhos.nomehotel}}
                   </div>
                 <div class="col-md-1">
-                  <span title="Diárias" class="fas fa-clock"></span> {{item.diarias}}
+                  <span title="Diárias" class="fas fa-clock"></span> {{carrinho.carrinhos.diarias}}
                 </div>
                 <div class="col-md-2">
-                  <span title="R$ Diária" class="fas fa-money"></span> {{item.valor |
+                  <span title="R$ Diária" class="fas fa-money"></span> {{carrinho.carrinhos.valor |
                   currency:'R$':'symbol':'':'pt-BR'}}
                 </div>
                 <div class="col-md-2">
-                  <span title="R$ Total" class="fas fa-money"></span> {{item.diarias * item.valor |
+                  <span title="R$ Total" class="fas fa-money"></span> {{carrinho.carrinhos.diarias * carrinho.carrinhos.valor |
                   currency:'R$':'symbol':'':'pt-BR'}}
                 </div>
               </div>
@@ -54,7 +54,7 @@
                 <div class="row">
                   <div class="col-md-12">
                     <div class="card-body">
-                      <p class="card-text"  *ngFor="let item of carrinho.carrinhos" ><span class="fas fa-money"></span> {{item.diarias * item.valor |
+                      <p class="card-text"> <span class="fas fa-money"></span> {{carrinho.carrinhos.diarias * carrinho.carrinhos.valor |
                         currency:'R$':'symbol':'':'pt-BR'}}</p>
                       <hr>
                       <p class="card-text" ><span class="fas fa-money"></span> {{totaldopedido | currency:'R$':'symbol':'':'pt-BR'}}</p>
@@ -63,7 +63,7 @@
                 </div>
                 <hr>
                 <div class="card-footer">
-                  <!-- <button type="button" (click)="redirecionarPagamento()" class="btn btn-success">Ir para Pagamento</button> -->
+                  <button type="submit" class="btn btn-success">Finalizar Reserva</button>
                 </div>
               </div>
             </div>
@@ -71,4 +71,12 @@
         </div>
       </body>
     </div>
+
+    <input type = "hidden" formControlName="idcliente" >
+    <input type = "hidden" formControlName="idquarto" >
+    <input type = "hidden" formControlName="valor" >
+    <input type = "hidden" formControlName="dataentrada" >
+    <input type = "hidden" formControlName="datasaida" >
+    <input type = "hidden" formControlName = "idusuariocripto" >
+
   </form>

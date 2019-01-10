@@ -2,6 +2,7 @@ import { SafeResourceUrl } from "@angular/platform-browser";
 
 export interface IUsuario {
   loginusuario: string;
+  idusuariocripto:string;
   email:string;
   idusuario: number;
   interval:number;

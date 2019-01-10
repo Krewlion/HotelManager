@@ -55,18 +55,18 @@ export class MenuComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.carrinho.atualizarCarrinho();
+    if (this.MenuService.logado){
+      this.MenuService.exibirNomeUsuarioMenu();
+    }
   }
 
   ngAfterViewInit(){
 
-    // const usuariologado = this.MenuService.pegarDadosCookie();
-    // if (usuariologado == undefined) {
-    // } else {
-    //   this.ser.montarMenu();
-    //   this.MenuService.exibirNomeClienteNoMenu();
-    //   usuariologado.interval = this.MenuService.iniciarContador(this.tempoSesssao, this.router);
-    //   this.MenuService.exibirMenu();
-    // }
+  }
+
+  limparCookie(){
+    this.MenuService.limparCookie();
+    this.router.navigate([""]);
   }
 
   ativarSpin(){

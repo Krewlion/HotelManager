@@ -26,6 +26,7 @@ export class CarrinhoComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.menu.controlarMenu();
     this.carrinho.pegarDadosCarrinho();
     this.calcularTotalPedido();
     this.formCarrinho = this.formBuilder.group([
@@ -37,29 +38,19 @@ export class CarrinhoComponent implements OnInit {
     this.menu.totalitens = "";
   }
 
-  removerDoCarrinho(item:ICarrinho){
-    console.log(this.carrinho.carrinhos);
-    var index = this.carrinho.carrinhos.indexOf(item);
-    console.log(index);
-    this.carrinho.carrinhos.splice(index,1);
-    console.log(this.carrinho.carrinhos);
-    this.carrinho.atualizarDadosCarrinho(this.carrinho.carrinhos);
-    this.calcularTotalPedido();
+  removerDoCarrinho(){
+    this.carrinho.limparCarrinho();
 
   }
 
   calcularTotalPedido(){
     this.totaldopedido = 0;
-    if(this.carrinho.carrinhos != undefined){
-
-      this.carrinho.carrinhos.forEach(item=>{
-        var datainicial = new Date(item.datainicial);
-        var datafinal = new Date(item.datafinal);
-        item.datainicial = datainicial.toLocaleDateString("pt-BR");
-        item.datafinal = datafinal.toLocaleDateString("pt-BR");
-        this.totaldopedido = this.totaldopedido + (item.valor * item.diarias);
-      })
-
+    if ( this.carrinho.carrinhos != undefined ){
+      var datainicial = new Date(this.carrinho.carrinhos.datainicial);
+      var datafinal = new Date(this.carrinho.carrinhos.datafinal);
+      this.carrinho.carrinhos.datainicial = datainicial.toLocaleDateString("pt-BR");
+      this.carrinho.carrinhos.datafinal = datafinal.toLocaleDateString("pt-BR");
+      this.totaldopedido = this.carrinho.carrinhos.valor * this.carrinho.carrinhos.diarias;
     }
   }
 

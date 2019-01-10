@@ -10,18 +10,11 @@ export class CarrinhoService {
 
   constructor(private ser:Servicos, private menu:MenuService) { }
 
-  carrinhos:ICarrinho[] = [];
+  carrinhos:ICarrinho = undefined;
 
   pegarDadosCarrinho() {
-    const carrinho: ICarrinho[] = JSON.parse(localStorage.getItem('suareservacarrinho'));
-
-    if(carrinho ==undefined){
-      this.carrinhos = [];
-    }
-    else
-    {
-      this.carrinhos = carrinho;
-    }
+    const carrinho: ICarrinho = JSON.parse(localStorage.getItem('suareservacarrinho'));
+    this.carrinhos = carrinho;
   }
 
   atualizarDadosCarrinho(carrinho:ICarrinho[]) {
@@ -30,23 +23,18 @@ export class CarrinhoService {
 
   atualizarCarrinho(){
     this.pegarDadosCarrinho();
-    if (this.carrinhos != null){
-      if (this.carrinhos.length > 0){
-        this.menu.totalitens = this.carrinhos.length.toString();
-      }
-      else{
-        this.menu.totalitens = "";
-      }
+    if (this.carrinhos == undefined){
+      this.menu.totalitens = "";
     }
     else{
-      this.menu.totalitens = "";
+      this.menu.totalitens = "1";
     }
   }
 
   limparCarrinho() {
     localStorage.removeItem('suareservacarrinho');
     localStorage.clear();
-    this.carrinhos = [];
+    this.carrinhos = undefined;
   }
 
 }

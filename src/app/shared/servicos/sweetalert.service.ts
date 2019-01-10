@@ -111,14 +111,9 @@ export class SweetalertService {
 
       if (result.value) {
 
-        let carrinhos: ICarrinho[] = JSON.parse(localStorage.getItem('suareservacarrinho'));
-        if (carrinhos == undefined){
-          carrinhos = [];
-        }
+        var expirarem = (new Date().getTime()) + (60000 * 30);
 
-        carrinhos.push(carrinho)
-
-        localStorage.setItem('suareservacarrinho', JSON.stringify(carrinhos));
+        localStorage.setItem('suareservacarrinho', JSON.stringify({"value":carrinho, "expires": expirarem}));
         swal(
           'Sucesso!',
           'O item selecionado foi adicionado ao carrinho.',
@@ -142,6 +137,8 @@ export class SweetalertService {
         R$ diária : ${carrinho.valor.toLocaleString("pt-BR")} <br>
         Diária(s) : ${carrinho.diarias} <br>
         R$ Final : ${(carrinho.valor * carrinho.diarias).toLocaleString("pt-BR")}  <br>
+        <br>
+        Obs: Ao incluir esse item no carrinho, será substituido pelo anterior.
       `,
       type: 'warning',
       showCancelButton: true,

@@ -14,8 +14,8 @@ export class AuthGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     if (this.menu.pegarDadosCookie() != undefined) {
       //this.menu.exibirMenu();
-      this.menu.logado = true;
-      //this.menu.exibirNomeClienteNoMenu();
+        this.menu.logado = true;
+        this.menu.exibirNomeUsuarioMenu();
         // logged in so return true
         return true;
     }

@@ -18,6 +18,7 @@ export class MenuService {
 
   menuobs:any[];
   logado:boolean = false;
+  nomeusuario:string = "";
 
   totalitens:string = "";
 
@@ -40,13 +41,23 @@ export class MenuService {
   }
 
   ocultarMenu() {
-    const menu: HTMLElement = document.getElementById('menu') as HTMLElement;
-    menu.style.display = 'none';
+    this.nomeusuario = "";
   }
 
-   exibirMenu() {
-    const menu: HTMLElement = document.getElementById('menu') as HTMLElement;
-    menu.style.display = 'flex';
+   exibirNomeUsuarioMenu() {
+    const usuario = this.pegarDadosCookie();
+    this.nomeusuario = usuario.loginusuario;
+  }
+
+  controlarMenu(){
+    const usuario = this.pegarDadosCookie();
+    if (usuario == undefined){
+      this.logado = false;
+    }
+    else{
+      this.nomeusuario = usuario.loginusuario;
+      this.logado = true;
+    }
   }
 
   exibirNomeClienteNoMenu() {
@@ -74,21 +85,10 @@ export class MenuService {
     return usuario;
   }
 
-  usuarioLogado(): boolean {
-    const usuario = this.pegarDadosCookie();
-    if (usuario == undefined) {
-      this.ocultarMenu();
-      return false;
-    } else {
-      this.exibirMenu();
-      return true;
-    }
-  }
 
-  limparCookie(route: Router) {
-    localStorage.removeItem('Metanoia');
+  limparCookie() {
+    localStorage.removeItem('suareserva');
     localStorage.clear();
-    route.navigate(['/login']);
   }
 
   iniciarContador(temposessao:number, route:Router): number {
@@ -158,7 +158,7 @@ export class MenuService {
           minutos = 0;
           segundos = 0;
           Menu.limparTemporizador();
-          Menu.limparCookie(route);
+          Menu.limparCookie();
           sweet.ExibirMensagemAviso("Seu tempo ocioso foi maior que "+temposessao+" minutos, ou seja, sua sessão foi encerrada automaticamente.");
         } else {
           if (minutos > minutosExpirar / 2) {

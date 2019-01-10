@@ -9,6 +9,8 @@ import { CarrinhoComponent } from './carrinho/carrinho.component';
 import { CarrinhoService } from './carrinho/carrinho.service';
 import { LoginComponent } from './cliente/login/login.component';
 
+import { SobreEmpresaComponent } from './empresa/sobre_empresa/sobre_empresa.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -35,10 +37,14 @@ import { LoginComponent } from './cliente/login/login.component';
       {
         path:'usuario/login',
         component:LoginComponent
+      },
+      {
+        path:'empresa/sobre/:id',
+        component:SobreEmpresaComponent
       }
     ])
   ],
-  declarations: [HomeComponent, SobreComponent, HoteisComponent, CarrinhoComponent],
+  declarations: [HomeComponent, SobreComponent, HoteisComponent, CarrinhoComponent,SobreEmpresaComponent],
   providers:[CarrinhoService]
 })
 export class PublicoModule { }

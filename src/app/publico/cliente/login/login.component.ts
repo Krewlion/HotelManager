@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { LoadingService } from 'src/app/shared/loading/loading.service';
 import { IUsuario } from 'src/app/shared/interface/interfaces';
 import { Servicos } from 'src/app/shared/servicos/servicos.service';
+import { MenuService } from 'src/app/menu/menu.service';
 
 
 @Component({
@@ -26,7 +27,8 @@ export class LoginComponent implements OnInit {
     private route:ActivatedRoute,
     private http:HttpClient,
     private loading:LoadingService,
-    private ser:Servicos
+    private ser:Servicos,
+    private menu:MenuService,
   )
   {}
 
@@ -66,18 +68,17 @@ export class LoginComponent implements OnInit {
             }
             else{
               if (result.erros == undefined){
-              usuario.idusuario = result.idusuario;
-              usuario.cpf = result.cpf;
+              usuario.idusuariocripto = result.idusuariocripto;
               //usuario.interval = this.menu.iniciarContador(this.menu.tempoSesssao, this.router);
-              usuario.loginusuario = result.loginusuario;
+              usuario.loginusuario = result.nomeusuario;
               usuario.token = result.token;
               //this.messagingService.pedirPermissao(usuario.idusuario);
               this.ser.abrirCookie(usuario, this.router, this.query);
+              this.menu.exibirNomeUsuarioMenu();
             }
             else{
               //this.erros = result;
               this.sweet.ExibirMensagemErro(result.erros.join("<br>"));
-              this.form.patchValue({"cpf":""})
               this.loading.esconderLoading();
             }
           }

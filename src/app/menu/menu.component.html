@@ -16,18 +16,18 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
-            <b id="nomeCliente"></b>
+            <b>{{ MenuService.nomeusuario}}</b>
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" routerLink="/perfil">Perfil</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" routerLink="/sair">sair</a>
+            <a class="dropdown-item" (click)="limparCookie()">Sair</a>
           </div>
         </li>
       </ul>
       <img width="30px" style="display: none" src="../assets/imagens/clock.gif" id="loadingContador">
       <!-- <img width="30px" style="display: none" src="../hs/assets/imagens/clock.gif" id="loadingContador"> -->
-      <input class="form-control mr-sm-2" type="text" id="contador" readonly="readonly" aria-label="Search">
+      <!-- <input class="form-control mr-sm-2" type="text" id="contador" readonly="readonly" aria-label="Search"> -->
     </form>
 
     <form *ngIf="!MenuService.logado" class="form-inline-2 my-2 my-lg-0">

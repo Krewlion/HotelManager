@@ -1,0 +1,85 @@
+<form [formGroup]="formDetalheEmpresa">
+  <div class="painel">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title"></h3>
+      </div>
+      <div class="panel-body">
+        <div class="form-group" style="font-weight: bold" *ngIf="empresa">
+
+          <div class="row">
+            <div class="col-md-4">
+              <span class="fas fa-fingerprint"></span> CNPJ : {{empresa.cnpj | cnpj}}
+            </div>
+            <div class="col-md-4">
+              <span class="fas fa-building"></span> NOME: {{empresa.nomeempresa}}
+            </div>
+            <div class="col-md-4">
+              <span class="fas fa-building"></span> RAZAO SOCIAL: {{empresa.razaosocial}}
+            </div>
+          </div>
+          <br>
+
+          <div class="row">
+            <div class="col-md-2">
+              <span class="fas fa-map-marker-alt"></span> CEP : {{empresa.cep}}
+            </div>
+            <div class="col-md-6">
+              <span class="fas fa-map-marker-alt"></span> CEP : {{empresa.logradouro + ' - ' + empresa.numero}}
+            </div>
+            <div class="col-md-4">
+              <span class="fas fa-map-marker-alt"></span> COMPLEMENTO : {{empresa.complemente}}
+            </div>
+          </div>
+
+          <br>
+
+          <div class="row">
+            <div class="col-md-2">
+              <span class="fas fa-clock"></span> CHECKIN : {{empresa.horachekin}}
+            </div>
+            <div class="col-md-2">
+              <span class="fas fa-clock"></span> CHECKOUT : {{empresa.horacheckout}}
+            </div>
+          </div>
+
+        </div>
+
+        <div class="form-group" *ngIf="tiposQuartos">
+          <div class="row">
+
+            <div class="col-lg-4" *ngFor="let quarto of tiposQuartos">
+              <div class="card card-hotel">
+                <div class="card-header">
+                  {{quarto.tipoquarto}}
+                </div>
+                <div class="card-body">
+                    <p class="card-text"><span class="fas fa-wind"></span> Ar condionado: {{quarto.arcondicionado ?
+                      "Sim" : "Não" }}</p>
+                    <p class="card-text"><span class="fas fa-wind"></span> Ventilador: {{quarto.ventilador == true ?
+                      "Sim" : "Não"}}</p>
+                    <p class="card-text"> <span class="fas fa-bed"></span> Solteiro : {{quarto.camasolteiro}}</p>
+                    <p class="card-text"><span class="fas fa-bed"></span> Casal : {{quarto.camacasal}}</p>
+
+                    <p class="card-text"><span class="fas fa-toilet-paper"></span> Banheiro:
+                      {{quarto.banheiroprivativo == true ? "Privativo" : "Compartilhado"}}</p>
+                      <p class="card-text"><span class="fas fa-bathtub"></span> Banheira:
+                        {{quarto.banheiroprivativo == true ? "Sim" : "Não"}}</p>
+
+                    <p class="card-text"><span class="fas fa-water"></span> Vista para o mar:   {{quarto.vistamar == true ? "Sim" : "Não"}} </p>
+                    <p class="card-text"><span class="fas fa-sun"></span> Vista para Por do Sol:  {{quarto.vistapordosol == true ? "Sim" : "Não"}}</p>
+
+                    <p class="card-text"><span class="fas fa-users"></span> Max. Hóspedes: {{quarto.qtdhospedes}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</form>
