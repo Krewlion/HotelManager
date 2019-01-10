@@ -12,11 +12,12 @@ import { FormsModule } from '@angular/forms';
 import { PublicoModule } from './publico/publico.module';
 import { HomeComponent } from '../app/publico/home/home.component'
 import {Servicos} from '../app/shared/servicos/servicos.service';
-import {PagamentoModule} from './privado/cliente/pagamento/pagamento.module';
+import {PagamentoModule} from './privado/usuario/pagamento/pagamento.module';
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { CadastrarComponent } from './publico/usuario/cadastrar/cadastrar.component';
 import { NotfoundComponent } from './notfound/notfound.component';
+import { PrivadoModule } from './privado/privado.module';
 
 
 registerLocaleData(localePt, 'pt-BR', localeFrExtra);
@@ -36,6 +37,7 @@ registerLocaleData(localePt, 'pt-BR', localeFrExtra);
     SharedModule,
     PagamentoModule,
     PublicoModule,
+    PrivadoModule,
     RouterModule
     .forRoot([
       {

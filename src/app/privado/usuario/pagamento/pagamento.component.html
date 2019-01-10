@@ -3,46 +3,35 @@
 
       <h1>Meus Cartões <span class="fas fa-credit-card"></span></h1>
       <body  style="padding-top: 2%;">
-        <div *ngIf="carrinho.carrinhos == undefined">
+        <div *ngIf="cartoes.length <= 0">
             <div class="panel panel-danger">
                 <div class="panel-heading">
                   <h2 class="panel-title">
-                    Seu carrinho está vazio <span class="fas fa-shopping-cart"></span>
+                    Cartões de Crédito <span class="fas fa-credit-cart"></span>
                   </h2>
                 </div>
                 <div class="panel-body">
                   <div class="form-group">
-                    <h3 class="text-danger"> Infelizmente não possui nenhum item em seu carrinho. </h3>
-                    <h4 class="text-danger" >Para selecionar um quarto clique <a routerLink="/home"> aqui <span class="fas fa-plus"></span> </a></h4>
+                    <h3 class="text-danger"> Infelizmente você não possui nenhum cartão cadastrado. </h3>
+                    <h4 class="text-danger" >Para incluir um cartão clique <a routerLink="/privado/usuario/incluircartao"> aqui <span class="fas fa-plus"></span> </a></h4>
                   </div>
                 </div>
             </div>
         </div>
 
-        <div *ngIf="carrinho.carrinhos != undefined">
+        <div *ngIf="cartoes.length > 0">
           <div class="row">
             <div class="col-md-9">
-              <div class="row">
+              <div class="row" *ngFor="let c of cartoes">
                 <div class="col-md-2">
-                  <span title="Entrada" class="fas fa-calendar"></span> {{carrinho.carrinhos.datainicial}}
+                  <span title="" class="fas fa-calendar"></span> {{c.numerocartao}}
                 </div>
                 <div class="col-md-2">
-                  <span title="Saída" class="fas fa-calendar"></span> {{carrinho.carrinhos.datafinal}}
+                  <span title="Saída" class="fas fa-calendar"></span> {{c.datavencimento}}
                 </div>
                 <div class="col-md-2">
-                    <span title="Hotel" class="fas fa-calendar"></span> {{carrinho.carrinhos.nomehotel}}
+                    <span title="Hotel" class="fas fa-calendar"></span> {{c.nomecartao}}
                   </div>
-                <div class="col-md-1">
-                  <span title="Diárias" class="fas fa-clock"></span> {{carrinho.carrinhos.diarias}}
-                </div>
-                <div class="col-md-2">
-                  <span title="R$ Diária" class="fas fa-money"></span> {{carrinho.carrinhos.valor |
-                  currency:'R$':'symbol':'':'pt-BR'}}
-                </div>
-                <div class="col-md-2">
-                  <span title="R$ Total" class="fas fa-money"></span> {{carrinho.carrinhos.diarias * carrinho.carrinhos.valor |
-                  currency:'R$':'symbol':'':'pt-BR'}}
-                </div>
               </div>
 
             </div>

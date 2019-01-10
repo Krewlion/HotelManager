@@ -46,3 +46,13 @@ export interface ICarrinho{
   diarias:number;
   idquarto:number;
 }
+
+
+export interface ICartao{
+  cvv:string;
+  datavencimento:string;
+  nomecartao:string;
+  idusuario:number;
+  idusuariocartao:number;
+  numerocartao:string;
+}

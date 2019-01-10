@@ -6,6 +6,7 @@ import { Servicos } from 'src/app/shared/servicos/servicos.service';
 import { SweetalertService } from 'src/app/shared/servicos/sweetalert.service';
 import { LoadingService } from 'src/app/shared/loading/loading.service';
 import { Router } from '@angular/router';
+import { ICartao } from 'src/app/shared/interface/interfaces';
 
 
 @Component({
@@ -17,6 +18,7 @@ export class PagamentoComponent implements OnInit {
 
   formPagamento:FormGroup;
   formBuilder:FormBuilder = new FormBuilder();
+  cartoes:ICartao[] = [];
 
   totaldopedido:number = 0;
 
@@ -33,7 +35,7 @@ export class PagamentoComponent implements OnInit {
 
   ngOnInit() {
     this.carrinho.pegarDadosCarrinho();
-    //this.iniciarForm();
+    this.listarCortoesParaOUsuario();
     this.calcularTotalPedido();
   }
 
@@ -47,8 +49,33 @@ export class PagamentoComponent implements OnInit {
         valor:[0],
         idusuariocripto:[""]
       }
-
     );
+  }
+
+  listarCortoesParaOUsuario(){
+    this.loading.conteudo = "Aguarde enquando seus cartões estão sendo consultados"
+    this.loading.exibirLoading();
+    var idusuario = this.ser.pegarDadosCookie().idusuariocripto;
+    this.http.get(this.ser.retornarURL() + "Usuario/ListarCartoesUsuario?idusuario=" + idusuario)
+      .subscribe((resultado: any) => {
+        if (resultado.erros == undefined) {
+          this.cartoes = resultado;
+        }
+        else {
+          this.sweet.ExibirMensagemErro(resultado.erros.join("<br>"));
+          this.loading.esconderLoading();
+        }
+      }
+        ,
+        (error: any) => {
+          this.sweet.ExibirMensagemCatch(error);
+          this.loading.esconderLoading();
+        }
+        ,
+        () => {
+          this.loading.esconderLoading();
+        }
+      )
   }
 
   calcularTotalPedido(){

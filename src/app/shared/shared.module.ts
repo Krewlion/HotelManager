@@ -18,6 +18,7 @@ import { CarouselModule } from 'angular-bootstrap-md';
 import {ImagemService} from './imagens/imagem.service';
 
 
+
 @NgModule({
   imports: [
     CommonModule,
@@ -46,6 +47,7 @@ import {ImagemService} from './imagens/imagem.service';
   ],
   exports:[
     CommonModule,
+    FormsModule,
     GalleriaModule,
     BrowserModule,
     BrowserAnimationsModule,
