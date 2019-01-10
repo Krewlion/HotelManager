@@ -124,6 +124,32 @@ export class SweetalertService {
 
   }
 
+  ExibirInformaçãoTipoQuarto(quarto:any){
+
+
+    swal({
+      title: quarto.quarto,
+      html: `
+        Valor : ${quarto.valor} <br>
+        Cama de Casal : ${quarto.camacasal} <br>
+        Cama de Solteiro : ${quarto.camasolteiro} <br>
+        Quantidade de hóspedes : ${quarto.qtdhospedes} <br>
+        <hr>
+        Ar Condicionado : ${quarto.arcondicionado === true ? "Sim" : "Não"} <br>
+        Ventilador : ${quarto.ventilador === true ? "Sim" : "Não"} <br>
+        Banheiro Privativo : ${quarto.banheiroprivativo === true ? "Sim" : "Não"} <br>
+        Banheira : ${quarto.banheira === true ? "Sim" : "Não"} <br>
+        <hr>
+        Varanda :${quarto.varanda === true ? "Sim" : "Não"} <br>
+        Vista para o mar : ${quarto.vistamar === true ? "Sim" : "Não"} <br>
+        Vista para o por do Sol : ${quarto.vistapordosol === true ? "Sim" : "Não"} <br>
+        <hr>
+      `,
+      type: 'warning',
+      confirmButtonText: 'Ok!'
+    });
+  }
+
   ExibirConfirmacaoCarrinhoObservable(carrinho:ICarrinho){
 
     var data = new Date(carrinho.datainicial);
@@ -146,6 +172,39 @@ export class SweetalertService {
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Sim, adicionar!'
+    })
+  }
+
+  ExibirConfirmacaoCadastrar(){
+
+    return swal({
+      title: 'Para continuar clique na opção desejada',
+      html: `
+        Para prosseguir, clique em umas das opções <br>
+      `,
+      type: 'warning',
+      showCancelButton: true,
+      cancelButtonText: "Fisica",
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Jurídica'
+    })
+  }
+
+  ExibirConfirmacaoLogar(){
+
+    return swal({
+      title: 'Para continuar clique na opção desejada',
+      html: `
+        Para prosseguir, clique em umas das opções <br>
+      `,
+      type: 'warning',
+      showCancelButton: true,
+      cancelButtonClass:'warning',
+      cancelButtonText: "Fisica",
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Jurídica'
     })
   }
 

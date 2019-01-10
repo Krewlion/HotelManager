@@ -141,3 +141,8 @@
    background-color: white !important;
    color:#003580 !important;
  }
+
+ .navbar[_ngcontent-c1] .dropdown-menu[_ngcontent-c1] a[_ngcontent-c1]:hover {
+  background-color: white !important;
+  color:#003580 !important;
+}

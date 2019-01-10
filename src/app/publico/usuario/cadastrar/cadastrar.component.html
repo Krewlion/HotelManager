@@ -1,0 +1,55 @@
+<form [formGroup]="form" (ngSubmit) = "incluirUsuario()">
+  <div class="painel">
+    <body>
+        <div class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title"></h3>
+            </div>
+            <div class="panel-body">
+              <div class="form-group">
+                <div class= "row">
+                    <div class= "col-md-4">
+                        <label for = "cpf">CPF:</label>
+                        <input mask ="000.000.000-00" type = "text" formControlName = "cpf" placeholder="CPF" class= "form-control">
+                        <div class="text-danger" [innerHTML] = "erroCpf" *ngIf="erroCpf != null" ></div>
+                    </div>
+                    <div class= "col-md-4">
+                        <label for = "rg">Nome:</label>
+                        <input type = "text" formControlName = "nomeusuario" placeholder="Nome" class= "form-control">
+                        <div class="text-danger" [innerHTML] = "erroNome" *ngIf="erroNome != null" ></div>
+                    </div>
+                    <div class= "col-md-4">
+                        <label for = "data">Login:</label>
+                        <input type = "text" placeholder="Login" formControlName = "loginusuario" class= "form-control">
+                        <div class="text-danger" [innerHTML] = "erroLogin" *ngIf="erroLogin != null" ></div>
+                    </div>
+                  </div>
+                  <div class="row">
+                      <div class= "col-md-4">
+                          <label for = "nome">E-mail:</label>
+                          <input type = "text" formControlName = "email" placeholder="E-mail" class= "form-control">
+                          <div class="text-danger" [innerHTML] = "erroEmail" *ngIf="erroEmail != null" ></div>
+                      </div>
+                      <div class= "col-md-4">
+                          <label for = "email">Data Nascimento:</label>
+                          <input mask="00/00/0000" placeholder="dd/mm/aaaa" [dropSpecialCharacters]="false" type = "text" formControlName = "datanascimento" class= "form-control">
+                          <div class="text-danger" [innerHTML] = "erroData" *ngIf="erroData != null" ></div>
+                      </div>
+                      <div class= "col-md-4">
+                          <label for = "email">Senha:</label>
+                          <input type = "password" formControlName = "senha" placeholder="Senha" class= "form-control">
+                          <div class="text-danger" [innerHTML] = "erroSenha" *ngIf="erroSenha != null" ></div>
+                      </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <button class="btn btn-success" [disabled]="!form.valid" type="submit" >Incluir <span class="fa fa-plus"></span></button>
+                  <button class="btn btn-warning" (click)="voltar()" type="button">Voltar <span class="fa fa-undo"></span></button>
+                </div>
+            </div>
+          </div>
+      </body>
+      <input formControlName="subcontratos" type="hidden">
+      <input formControlName="idusuariologado" type="hidden">
+    </div>
+  </form>

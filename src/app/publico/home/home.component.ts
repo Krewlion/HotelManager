@@ -269,6 +269,11 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  exibirInformacao(tipo:any){
+    console.log(tipo);
+    this.sweet.ExibirInformaçãoTipoQuarto(tipo);
+  }
+
   selecionar(quarto: any) {
 
     let carrinho: ICarrinho = <ICarrinho>{};
@@ -282,7 +287,7 @@ export class HomeComponent implements OnInit {
     var timeDiff = Math.abs(date2.getTime() - date1.getTime());
     var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
     carrinho.nomehotel = quarto.hotel;
-    carrinho.diarias = diffDays + 1;
+    carrinho.diarias = diffDays;
     //this.sweet.ExibirConfirmacaoCarrinho(carrinho);
 
     this.sweet.ExibirConfirmacaoCarrinhoObservable(carrinho).then((result) => {

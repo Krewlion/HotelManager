@@ -87,8 +87,41 @@
         </div>
 
         <div class="form-group" *ngIf="exibirQuartos">
+            <p-accordion *ngFor="let quarto of quartos">
+              <br>
+                <p-accordionTab header={{quarto.nomeempresa}}>
+
+                    <div class="card card-hotel" *ngFor="let tipo of quarto.tipoquartos" style="margin-top: 1%;margin-bottom: 1%">
+
+                        <div class="card-header">
+                            {{tipo.tipoquarto}}
+                            <span style="margin-left:1%" (click)="exibirInformacao(tipo)" title="mais informações sobre esse tipo de quarto" class="fas fa-info-circle fa-2x"></span>
+                            <span style="margin-left:1%" title="mais informações sobre esse tipo de quarto" class="fas fa-images fa-2x"></span>
+
+                        </div>
+                        <div class="card-body">
+                          <div class="row">
+
+                              <div class="col-md-3" *ngFor="let q of tipo.quartos">
+                                  <div class="card card-hotel" style="width: 18rem !important;margin-bottom: 4%; margin-left: 2%;">
+                                      <div class="card-header" style="cursor: pointer" (click)="redirecionarEmpresaSobre(quarto.idempresa)">
+                                          Quarto - {{q.quarto}}  | Andar: {{q.andar
+                                            == '0' ? 'Térreo' : q.andar +'° andar'}}
+                                      </div>
+                                      <div class="card-body">
+                                          <span title="escolher" (click)="selecionar(q)" class="fas fa-check-circle fa-2x"></span>
+                                      </div>
+                                  </div>
+                              </div>
+
+                          </div>
+                        </div>
+                    </div>
+                </p-accordionTab>
+            </p-accordion>
+
           <hr>
-          <div class="row">
+          <!-- <div class="row">
             <div class="col-lg-8" *ngFor="let quarto of quartos">
               <div class="card card-hotel" style="width: 18rem;margin-bottom: 4%; margin-left: 2%;">
                 <div class="card-header" style="cursor: pointer" (click)="redirecionarEmpresaSobre(quarto.idempresa)">
@@ -144,7 +177,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>

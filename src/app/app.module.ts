@@ -4,7 +4,7 @@ import localeFrExtra from '@angular/common/locales/extra/br';
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './publico/cliente/login/login.component';
+import { LoginComponent } from './publico/usuario/login/login.component';
 import { SharedModule } from './shared/shared.module';
 import { MenuComponent } from './menu/menu.component';
 import { RouterModule } from '@angular/router';
@@ -15,6 +15,8 @@ import {Servicos} from '../app/shared/servicos/servicos.service';
 import {PagamentoModule} from './privado/cliente/pagamento/pagamento.module';
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { CadastrarComponent } from './publico/usuario/cadastrar/cadastrar.component';
+import { NotfoundComponent } from './notfound/notfound.component';
 
 
 registerLocaleData(localePt, 'pt-BR', localeFrExtra);
@@ -23,7 +25,9 @@ registerLocaleData(localePt, 'pt-BR', localeFrExtra);
   declarations: [
     AppComponent,
     LoginComponent,
-    MenuComponent
+    MenuComponent,
+    NotfoundComponent,
+    CadastrarComponent
   ],
   imports: [
     FormsModule,
@@ -42,7 +46,11 @@ registerLocaleData(localePt, 'pt-BR', localeFrExtra);
         path:'',
         component:HomeComponent,
       },
-      ]),
+      {
+        path: '**',
+        component: NotfoundComponent }
+      ]
+    ),
     BsDatepickerModule.forRoot(),
   ],
   providers: [Servicos,

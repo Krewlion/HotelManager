@@ -82,7 +82,34 @@ export class MenuComponent implements OnInit, AfterViewInit {
   }
 
   logar(){
+
     this.router.navigate(["usuario/login"]);
+
+    // this.sweet.ExibirConfirmacaoLogar().then((result) => {
+
+    //   if (result.value) {
+    //     this.router.navigate(["publico/empresa/cadastrar"]);
+    //   }
+    //   else{
+    //     this.router.navigate(["usuario/login"]);
+    //   }
+    // });
+  }
+
+  cadastrarUsuario(){
+
+    this.router.navigate(["publico/usuario/cadastrar"]);
+
+    // this.sweet.ExibirConfirmacaoCadastrar().then((result) => {
+
+    //   if (result.value) {
+    //     this.router.navigate(["publico/empresa/cadastrar"]);
+    //   }
+    //   else{
+    //     this.router.navigate(["publico/usuario/cadastrar"]);
+    //   }
+    // });
+
   }
 
 }

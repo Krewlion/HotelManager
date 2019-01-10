@@ -88,7 +88,6 @@ export class MenuService {
 
   limparCookie() {
     localStorage.removeItem('suareserva');
-    localStorage.clear();
   }
 
   iniciarContador(temposessao:number, route:Router): number {
