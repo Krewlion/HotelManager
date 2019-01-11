@@ -90,83 +90,83 @@ export class MenuService {
     localStorage.removeItem('suareserva');
   }
 
-  iniciarContador(temposessao:number, route:Router): number {
-    let contador:HTMLInputElement = document.getElementById('contador') as HTMLInputElement;
-    contador.style.backgroundColor = "white";
-    contador.style.color = "gold";
-    contador.style.fontWeight = "bold";
-    let  loadingContador:HTMLImageElement  = document.getElementById('loadingContador') as HTMLImageElement;
-    let cont = 0;
-    let interval:number;
-    let minutosExpirar = this.tempoSesssao //seconds
-    const temposessao_alterar = this.tempoSesssao;
+  // iniciarContador(temposessao:number, route:Router): number {
+  //   let contador:HTMLInputElement = document.getElementById('contador') as HTMLInputElement;
+  //   contador.style.backgroundColor = "white";
+  //   contador.style.color = "gold";
+  //   contador.style.fontWeight = "bold";
+  //   let  loadingContador:HTMLImageElement  = document.getElementById('loadingContador') as HTMLImageElement;
+  //   let cont = 0;
+  //   let interval:number;
+  //   let minutosExpirar = this.tempoSesssao //seconds
+  //   const temposessao_alterar = this.tempoSesssao;
 
-    let segundos = 0;
-    let minutos = 0;
-    document.onclick = function() {
-      segundos = 0;
-      const load = document.getElementById('loadingContador') as HTMLImageElement;
-      load.style.display = 'none';
-      minutosExpirar = temposessao_alterar;
-      minutos = 0;
-      contador.value = 'Sessão: ' + (minutosExpirar - minutos) + ' minutos';
-    };
-    document.onmousemove = function() {
-      segundos = 0;
-      const load = document.getElementById('loadingContador') as HTMLImageElement;
-      load.style.display = 'none';
-      minutosExpirar = temposessao_alterar;
-      minutos = 0;
-      contador.value = 'Sessão: ' + (minutosExpirar - minutos) + ' minutos';
-    };
-    document.onkeypress = function() {
-      segundos = 0;
-      const load = document.getElementById('loadingContador') as HTMLImageElement;
-      load.style.display = 'none';
-      minutosExpirar = temposessao_alterar;
+  //   let segundos = 0;
+  //   let minutos = 0;
+  //   document.onclick = function() {
+  //     segundos = 0;
+  //     const load = document.getElementById('loadingContador') as HTMLImageElement;
+  //     load.style.display = 'none';
+  //     minutosExpirar = temposessao_alterar;
+  //     minutos = 0;
+  //     contador.value = 'Sessão: ' + (minutosExpirar - minutos) + ' minutos';
+  //   };
+  //   document.onmousemove = function() {
+  //     segundos = 0;
+  //     const load = document.getElementById('loadingContador') as HTMLImageElement;
+  //     load.style.display = 'none';
+  //     minutosExpirar = temposessao_alterar;
+  //     minutos = 0;
+  //     contador.value = 'Sessão: ' + (minutosExpirar - minutos) + ' minutos';
+  //   };
+  //   document.onkeypress = function() {
+  //     segundos = 0;
+  //     const load = document.getElementById('loadingContador') as HTMLImageElement;
+  //     load.style.display = 'none';
+  //     minutosExpirar = temposessao_alterar;
 
-      minutos = 0;
-      contador.value = 'Sessão: ' + (minutosExpirar - minutos) + ' minutos';
-    };
+  //     minutos = 0;
+  //     contador.value = 'Sessão: ' + (minutosExpirar - minutos) + ' minutos';
+  //   };
 
-    segundos = cont;
-    let tempoocioso = this.tempoOcioso;
-    contador.value = 'Sessão: ' + (minutosExpirar - minutos) + ' minutos';
-    loadingContador.style.display = 'none';
-    interval = window.setInterval(CheckIdleTime, 600);
-    function CheckIdleTime() {
-      segundos++;
-        this.cont = segundos;
-        if (segundos > tempoocioso) {
-          if (this.loadingContador.style.display == 'none') {
-          this.loadingContador.style.display = 'block';
-          }
-        }
-        let http:HttpClient;
-        let sweet:SweetalertService = new SweetalertService();
-        let Menu:MenuService = new MenuService( http, sweet);
-        const usuario = Menu.pegarDadosCookie();
+  //   segundos = cont;
+  //   let tempoocioso = this.tempoOcioso;
+  //   contador.value = 'Sessão: ' + (minutosExpirar - minutos) + ' minutos';
+  //   loadingContador.style.display = 'none';
+  //   interval = window.setInterval(CheckIdleTime, 600);
+  //   function CheckIdleTime() {
+  //     segundos++;
+  //       this.cont = segundos;
+  //       if (segundos > tempoocioso) {
+  //         if (this.loadingContador.style.display == 'none') {
+  //         this.loadingContador.style.display = 'block';
+  //         }
+  //       }
+  //       let http:HttpClient;
+  //       let sweet:SweetalertService = new SweetalertService();
+  //       let Menu:MenuService = new MenuService( http, sweet);
+  //       const usuario = Menu.pegarDadosCookie();
 
-        if (segundos >= 60) {
-          segundos = 0;
-          minutos++;
-          this.contador.value = 'Sessão: ' + (minutosExpirar - minutos) + ' minutos';
-        }
+  //       if (segundos >= 60) {
+  //         segundos = 0;
+  //         minutos++;
+  //         this.contador.value = 'Sessão: ' + (minutosExpirar - minutos) + ' minutos';
+  //       }
 
-        if (minutos >= minutosExpirar) {
-          minutos = 0;
-          segundos = 0;
-          Menu.limparTemporizador();
-          Menu.limparCookie();
-          sweet.ExibirMensagemAviso("Seu tempo ocioso foi maior que "+temposessao+" minutos, ou seja, sua sessão foi encerrada automaticamente.");
-        } else {
-          if (minutos > minutosExpirar / 2) {
-            this.contador.style.color = 'red';
-          } else {
-            this.contador.style.color = 'gold';
-          }
-        }
-    }
-    return interval;
-  }
+  //       if (minutos >= minutosExpirar) {
+  //         minutos = 0;
+  //         segundos = 0;
+  //         Menu.limparTemporizador();
+  //         Menu.limparCookie();
+  //         sweet.ExibirMensagemAviso("Seu tempo ocioso foi maior que "+temposessao+" minutos, ou seja, sua sessão foi encerrada automaticamente.");
+  //       } else {
+  //         if (minutos > minutosExpirar / 2) {
+  //           this.contador.style.color = 'red';
+  //         } else {
+  //           this.contador.style.color = 'gold';
+  //         }
+  //       }
+  //   }
+  //   return interval;
+  // }
 }

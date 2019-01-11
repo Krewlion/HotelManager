@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { LoadingService } from 'src/app/shared/loading/loading.service';
 import { Servicos } from 'src/app/shared/servicos/servicos.service';
 import { Router } from '@angular/router';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-incluircartao',
@@ -30,15 +31,16 @@ export class IncluircartaoComponent implements OnInit {
       private http:HttpClient,
       private loading:LoadingService,
       private ser:Servicos,
-      private router:Router
+      private router:Router,
+      private location:Location
     ) { }
 
   ngOnInit() {
-
+    this.iniciarForm();
   }
 
   voltar(){
-
+    this.location.back();
   }
 
   iniciarForm(){
@@ -46,13 +48,34 @@ export class IncluircartaoComponent implements OnInit {
       numerocartao:[""],
       datavencimento:[""],
       nomecartao:[""],
-      cvv:[""]
+      cvv:[""],
+      idusuariocripto:[""]
     }
 );
   }
 
   incluirCartao(){
+    this.form.get("idusuariocripto").patchValue(this.ser.pegarDadosCookie().idusuariocripto);
+    this.http.post(this.ser.retornarURL()+"Usuario/IncluirCartao", this.form.value)
+    .subscribe((resultado:any) => {
 
+      if (resultado.erros == undefined){
+        this.sweet.ExibirMensagemSucesso("O cartão foi inserido com sucesso");
+      }
+      else{
+        this.sweet.ExibirMensagemErro(resultado.erros.join("<br>"));
+        this.loading.esconderLoading();
+      }
+
+    },
+    (error:any)=>{
+      this.sweet.ExibirMensagemCatch(error);
+      this.loading.esconderLoading();
+    }
+    ,
+    ()=>{
+      this.loading.esconderLoading();
+    });
   }
 
 }

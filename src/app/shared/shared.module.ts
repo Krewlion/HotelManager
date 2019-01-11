@@ -5,7 +5,6 @@ import { HttpModule } from "@angular/http"
 import { Loading } from './loading/loading.component';
 import { LoadingService } from './loading/loading.service';
 import { CnpjPipe } from './pipe/cnpj.pipe';
-import {NgxMaskModule} from 'ngx-mask';
 import {CpfPipe} from './pipe/cpf.pipe';
 import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
@@ -16,13 +15,17 @@ import {GalleriaModule} from 'primeng/galleria';
 import { ImagensComponent } from './imagens/imagens.component';
 import { CarouselModule } from 'angular-bootstrap-md';
 import {ImagemService} from './imagens/imagem.service';
-
+import {NgxMaskModule} from 'ngx-mask';
+import { CreditCardDirectivesModule } from 'angular-cc-library';
+import {NgxPaginationModule} from 'ngx-pagination'
 
 
 @NgModule({
   imports: [
     CommonModule,
     GalleriaModule,
+    NgxPaginationModule,
+    CreditCardDirectivesModule,
     ReactiveFormsModule,
     FormsModule,
     CarouselModule,
@@ -30,10 +33,10 @@ import {ImagemService} from './imagens/imagem.service';
     BrowserModule,
     BrowserAnimationsModule,
     CalendarModule,
+    BrowserModule,
     RouterModule.forRoot([
 
     ]),
-    BrowserModule,
     NgxMaskModule.forRoot()
   ],
   declarations: [
@@ -52,8 +55,10 @@ import {ImagemService} from './imagens/imagem.service';
     BrowserModule,
     BrowserAnimationsModule,
     CalendarModule,
+    NgxPaginationModule,
     ReactiveFormsModule,
     HttpModule,
+    CreditCardDirectivesModule,
     NgxMaskModule,
     Loading,
     CarouselModule,

@@ -4,6 +4,8 @@ import { IncluircartaoComponent } from './usuario/incluircartao/incluircartao.co
 import {  RouterModule } from '@angular/router';
 import { AuthGuard } from '../shared/guard/auth.guard';
 import { SharedModule } from '../shared/shared.module';
+import { MeuperfilComponent } from './usuario/meuperfil/meuperfil.component';
+import { PagamentoComponent } from '../privado/usuario/pagamento/pagamento.component';
 
 @NgModule({
   imports: [
@@ -14,9 +16,19 @@ import { SharedModule } from '../shared/shared.module';
         path:'privado/usuario/incluircartao',
         component:IncluircartaoComponent,
         canActivate:[AuthGuard]
+      },
+      {
+        path:'privado/usuario/meuperfil',
+        component:MeuperfilComponent,
+        canActivate:[AuthGuard]
+      },
+      {
+        path:'privado/cliente/pagamento',
+        component:PagamentoComponent,
+        canActivate:[AuthGuard]
       }
     ])
   ],
-  declarations: [IncluircartaoComponent]
+  declarations: [IncluircartaoComponent, MeuperfilComponent,PagamentoComponent]
 })
 export class PrivadoModule { }

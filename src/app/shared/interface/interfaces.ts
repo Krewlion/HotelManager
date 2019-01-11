@@ -7,8 +7,11 @@ export interface IUsuario {
   idusuario: number;
   interval:number;
   cpf:string;
-  nome:string;
+  nomeusuario:string;
   token:any
+  datanascimento:string;
+  cartoes:any[];
+  reservas:any[]
 }
 
 export interface IErro {

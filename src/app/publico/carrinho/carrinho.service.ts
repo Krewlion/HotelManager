@@ -33,7 +33,6 @@ export class CarrinhoService {
 
   limparCarrinho() {
     localStorage.removeItem('suareservacarrinho');
-    localStorage.clear();
     this.carrinhos = undefined;
   }
 

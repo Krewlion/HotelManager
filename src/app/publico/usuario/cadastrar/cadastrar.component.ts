@@ -5,7 +5,7 @@ import { SweetalertService } from 'src/app/shared/servicos/sweetalert.service';
 import { HttpClient } from '@angular/common/http';
 import { LoadingService } from 'src/app/shared/loading/loading.service';
 import { Servicos } from 'src/app/shared/servicos/servicos.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { debounceTime } from 'rxjs/operators';
 
 @Component({
@@ -30,6 +30,7 @@ export class CadastrarComponent implements OnInit {
   erroSenha:string = "";
   erroEmail:string = "";;
   erroIdGrupo:string  = "";
+  query:string = undefined;
 
   constructor
     (
@@ -38,10 +39,14 @@ export class CadastrarComponent implements OnInit {
       private http:HttpClient,
       private loading:LoadingService,
       private ser:Servicos,
-      private router:Router
+      private router:Router,
+      private route:ActivatedRoute
     ) { }
 
   ngOnInit() {
+    if (this.route.snapshot.queryParamMap.get("url")){
+      this.query = this.route.snapshot.queryParamMap.get("url");
+    }
     this.iniciarForm();
   }
 
@@ -121,7 +126,13 @@ export class CadastrarComponent implements OnInit {
     .subscribe((resultado:any)=>{
       if (resultado.erros == undefined) {
         this.sweet.ExibirMensagemSucesso("O seu cadastro foi realizado com sucesso");
-        this.router.navigate([""]);
+        if (this.query == undefined){
+          this.router.navigate([""]);
+        }
+        else{
+          this.router.navigate(["usuario/login"], {
+            queryParams: {url: this.query}});
+        }
       }
       else{
         this.sweet.ExibirMensagemErro(resultado.erros.join("<br>"));

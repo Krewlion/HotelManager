@@ -51,13 +51,17 @@ export class LoginComponent implements OnInit {
     // }
   }
 
+  Cadastrar(){
+    this.router.navigate(['publico/usuario/cadastrar'], {
+      queryParams: {url: "privado/cliente/pagamento"}});
+  }
+
   Entrar() {
-  //   const dados = this.ser.pegarDadosCookie();
-  //   if (dados != undefined) {
-  //     this.sweet.ExibirMensagemErro('Foi realizado apenas o redireciamento para pagina inicial, já que a sessão foi aberta para o usuário ' + dados.loginusuario + ' (provavelmente em outra aba deste navegador).');
-  //     this.menu.iniciarContador(this.menu.tempoSesssao, this.router);
-  //     this.router.navigate(['/servico/consultar']);
-  //   } else {
+     const dados = this.ser.pegarDadosCookie();
+     if (dados != undefined) {
+       this.sweet.ExibirMensagemErro('Foi realizado apenas o redireciamento para pagina inicial, já que a sessão foi aberta para o usuário ' + dados.loginusuario + ' (provavelmente em outra aba deste navegador).');
+       this.router.navigate(['']);
+    } else {
 
      const usuario: IUsuario = <IUsuario>{};
      this.loading.exibirLoading();
@@ -90,6 +94,7 @@ export class LoginComponent implements OnInit {
     () => {
       this.loading.esconderLoading();
     });
+  }
 }
   keyUp(key:any){
     if (key.key == "Enter"){

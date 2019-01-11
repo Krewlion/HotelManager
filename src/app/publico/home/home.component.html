@@ -1,183 +1,143 @@
 <form [formGroup]="formReservas">
   <div class="painel">
-    <div class="panel panel-primary">
+    <div class="panel panel-info">
       <div class="panel-heading">
-        <h3 class="panel-title"></h3>
+        <h4 class="panel-title">Consulte aqui os melhores hoteis</h4>
       </div>
       <div class="panel-body">
-        <div class="form-group" *ngIf="!cidadeSelecionada">
-          <h3> <span class="fas fa-city"></span> Pesquise e escolha os hotéis que a cidade tem a oferecer <span class="fas fa-landmark"></span></h3>
-          <h4>Selecione a cidade que deseja <span class="fas fa-map-marked-alt"></span></h4>
-          <div class="row">
-            <div class="col-lg-6">
-              <input type="text" autofocus formControlName="cidade" class="form-control search-result">
-              <div class="text-danger" [innerHTML]="erroCidade"></div>
-            </div>
-            <div class="col-lg-6" *ngIf="reservaService.exibirLoading">
-              <img src="../../../assets/Rolling-0.6s-200px.gif" width="50px" height="50px">
-            </div>
-            <div class="search-result" *ngIf="enderecos | async">
-              <ul>
-                <li *ngFor="let endereco of enderecos | async">
-                  <a (click)="selecionarBairro(endereco)"> {{endereco.bairro}} - {{endereco.cidade}}</a>
-                </li>
-              </ul>
-            </div>
-            <br>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-lg-4">
-            <div class="form-group" *ngIf="cidadeSelecionada">
-              <div class="card" style="width: 18rem;">
-                <div class="card-header">
-                  {{endereco.cidade}}
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title">{{endereco.cidade}}</h5>
-                  <p class="card-text">{{endereco.bairro}}</p>
-                  <a (click)="voltarCidade()" class="links">Alterar <span class="fa fa-refresh fa-2x"></span></a>
-                </div>
+
+          <div class="panel panel-primary">
+              <div class="panel-heading">
+                <h4 class="panel-title"></h4>
               </div>
-            </div>
-          </div>
-          <div class="col-lg-8">
+              <div class="panel-body">
 
-            <div class="form-group" *ngIf="cidadeSelecionada">
-              <div class="row">
-                <div class="col-lg-6">
-                  <span class="fas fa-calendar-alt fa-2x"></span>
-
-                  <p-calendar (onClose)="onClose()" required #cal2 showButtonBar="true" [minDate]="minDateValue"
-                    [locale]="en" id="date" dateFormat="dd/mm/yy" class="calendar" showOn="button" selectionMode="range"
-                    formControlName="date" [touchUI]="false">
-                    <p-footer>
-                      <button pButton label="Escolher" (click)="cal2.overlayVisible = false"></button>
-                    </p-footer>
-                  </p-calendar>
-                  <div [innerHTML]="errosRange" class="text-danger"></div>
-                </div>
-                <div class="col-lg-5">
-                  <span class="fas fa-users fa-2x"></span>
-                  <input type="number" formControlName="qtdhospedes" class="form-control">
-                  <div [innerHTML]="erroQtdhospedes" class="text-danger"></div>
-                </div>
-              </div>
-              <hr>
-            </div>
-          </div>
-        </div>
-
-        <hr>
-
-        <div class="form-group" *ngIf="cidadeSelecionada">
-          <div class="row">
-
-            <div class="col-lg-6">
-              <label>Nome Hotel</label>
-              <input type="text" formControlName="nomehotel" class="form-control">
-            </div>
-            <div class="col-lg-6" style="padding-top:10px">
-              <button type="button" [disabled]="!this.formReservas.valid" (click)="pesquisarDatas()" class="btn btn-success"><span
-                  class="fas fa-search"></span> Consultar</button>
-              <button type="button" [disabled]="!cidadeSelecionada" (click)="voltarDatas()" class="btn btn-danger"><span
-                  class="fas fa-undo"></span> Desfazer</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group" *ngIf="exibirQuartos">
-            <p-accordion *ngFor="let quarto of quartos">
-              <br>
-                <p-accordionTab header={{quarto.nomeempresa}}>
-
-                    <div class="card card-hotel" *ngFor="let tipo of quarto.tipoquartos" style="margin-top: 1%;margin-bottom: 1%">
-
-                        <div class="card-header">
-                            {{tipo.tipoquarto}}
-                            <span style="margin-left:1%" (click)="exibirInformacao(tipo)" title="mais informações sobre esse tipo de quarto" class="fas fa-info-circle fa-2x"></span>
-                            <span style="margin-left:1%" title="mais informações sobre esse tipo de quarto" class="fas fa-images fa-2x"></span>
-
-                        </div>
-                        <div class="card-body">
-                          <div class="row">
-
-                              <div class="col-md-3" *ngFor="let q of tipo.quartos">
-                                  <div class="card card-hotel" style="width: 18rem !important;margin-bottom: 4%; margin-left: 2%;">
-                                      <div class="card-header" style="cursor: pointer" (click)="redirecionarEmpresaSobre(quarto.idempresa)">
-                                          Quarto - {{q.quarto}}  | Andar: {{q.andar
-                                            == '0' ? 'Térreo' : q.andar +'° andar'}}
-                                      </div>
-                                      <div class="card-body">
-                                          <span title="escolher" (click)="selecionar(q)" class="fas fa-check-circle fa-2x"></span>
-                                      </div>
-                                  </div>
-                              </div>
-
+                  <div class="form-group" *ngIf="!cidadeSelecionada">
+                    <h4> <span class="fas fa-city"></span> Pesquise e escolha os hotéis que a cidade tem a oferecer <span class="fas fa-landmark"></span></h4>
+                    <h4>Selecione a cidade que deseja <span class="fas fa-map-marked-alt"></span></h4>
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <input type="text" autofocus formControlName="cidade" class="form-control search-result">
+                        <div class="text-danger" [innerHTML]="erroCidade"></div>
+                      </div>
+                      <div class="col-lg-6" *ngIf="reservaService.exibirLoading">
+                        <img src="../../../assets/Rolling-0.6s-200px.gif" width="50px" height="50px">
+                      </div>
+                      <div class="search-result" *ngIf="enderecos | async">
+                        <ul>
+                          <li *ngFor="let endereco of enderecos | async">
+                            <a (click)="selecionarBairro(endereco)"> {{endereco.bairro}} - {{endereco.cidade}}</a>
+                          </li>
+                        </ul>
+                      </div>
+                      <br>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-4">
+                      <div class="form-group" *ngIf="cidadeSelecionada">
+                        <div class="card" style="max-width: 18rem;">
+                          <div class="card-header">
+                            {{endereco.cidade}}
+                          </div>
+                          <div class="card-body">
+                            <h5 class="card-title">{{endereco.cidade}}</h5>
+                            <p class="card-text">{{endereco.bairro}}</p>
+                            <a (click)="voltarCidade()" class="links">Alterar <span class="fa fa-refresh fa-2x"></span></a>
                           </div>
                         </div>
-                    </div>
-                </p-accordionTab>
-            </p-accordion>
-
-          <hr>
-          <!-- <div class="row">
-            <div class="col-lg-8" *ngFor="let quarto of quartos">
-              <div class="card card-hotel" style="width: 18rem;margin-bottom: 4%; margin-left: 2%;">
-                <div class="card-header" style="cursor: pointer" (click)="redirecionarEmpresaSobre(quarto.idempresa)">
-                  {{quarto.nomeempresa}}
-                </div>
-                <div class="row">
-                  <div class="col-lg-4">
-                    <div class="text-center">
-                      <img src={{quarto.foto}} style="margin-top:6%; margin-left:6%; width: 220px; height: 150px;">
-                      <br>
-                      <div style="padding-top:2%;" >
-                          <span class="fas fa-info-circle fa-2x"></span>
-                          <a>{{quarto.tipoquarto}}</a>
-                          <br>
-                          <a target="_blank" class="text-center" routerLink="/empresa/sobre/{{quarto.idempresa}}">
-                            Conheça o Hotel
-                          </a>
-
                       </div>
                     </div>
+                    <div class="col-lg-8">
 
+                      <div class="form-group" *ngIf="cidadeSelecionada">
+                        <div class="row">
+                          <div class="col-lg-6">
+                            <span class="fas fa-calendar-alt fa-2x"></span>
+
+                            <p-calendar (onClose)="onClose()" required #cal2 showButtonBar="true" [minDate]="minDateValue"
+                              [locale]="en" [touchUI]="true" #date dateFormat="dd/mm/yy" class="calendar" selectionMode="range" formControlName="date">
+                              <p-footer>
+                                <button pButton
+                                label="Escolher" (click)="closeCalendar()"></button>
+                              </p-footer>
+                            </p-calendar>
+                            <div [innerHTML]="errosRange" class="text-danger"></div>
+                          </div>
+                          <div class="col-lg-5">
+                            <span class="fas fa-users fa-2x"></span>
+                            <input type="number" formControlName="qtdhospedes" class="form-control">
+                            <div [innerHTML]="erroQtdhospedes" class="text-danger"></div>
+                          </div>
+                        </div>
+                        <hr>
+                      </div>
+                    </div>
                   </div>
-                  <div class="col-lg-8">
-                    <div class="card-body">
-                      <p class="card-text"><span class="fas fa-asterisk"></span> <b> Quarto: {{quarto.quarto}} -
-                          {{quarto.andar
-                          == '0' ? 'Térreo' : quarto.andar +'° andar'}} </b> <span class="fas fa-asterisk"></span> </p>
-                      <p class="card-text"><span class="fas fa-money-check-alt"></span> {{quarto.valor}}</p>
-                      <p class="card-text"><span class="fas fa-wind"></span> Ar condionado: {{quarto.arcondicionado ?
-                        "Sim" : "Não" }}</p>
-                      <p class="card-text"><span class="fas fa-wind"></span> Ventilador: {{quarto.ventilador == true ?
-                        "Sim" : "Não"}}</p>
-                      <p class="card-text"> <span class="fas fa-bed"></span> Solteiro : {{quarto.camasolteiro}}</p>
-                      <p class="card-text"><span class="fas fa-bed"></span> Casal : {{quarto.camacasal}}</p>
-                      <p class="card-text"><span class="fas fa-map-marked-alt"></span> {{quarto.endereco}}</p>
 
-                      <p class="card-text"><span class="fas fa-toilet-paper"></span> Banheiro:
-                        {{quarto.banheiroprivativo == true ? "Privativo" : "Compartilhado"}}</p>
-                        <p class="card-text"><span class="fas fa-bathtub"></span> Banheira:
-                          {{quarto.banheiroprivativo == true ? "Sim" : "Não"}}</p>
+                  <div class="form-group" *ngIf="cidadeSelecionada">
+                    <div class="row">
 
-                      <p class="card-text"><span class="fas fa-water"></span> Vista para o mar:   {{quarto.vistamar == true ? "Sim" : "Não"}} </p>
-                      <p class="card-text"><span class="fas fa-sun"></span> Vista para Por do Sol:  {{quarto.vistapordosol == true ? "Sim" : "Não"}}</p>
+                      <div class="col-lg-6">
+                        <label>Nome Hotel</label>
+                        <input type="text" formControlName="nomehotel" class="form-control">
+                      </div>
+                      <div class="col-lg-6" style="padding-top:10px">
+                        <button type="button" [disabled]="!this.formReservas.valid" (click)="pesquisarDatas(false)" class="btn btn-success"><span
+                            class="fas fa-search"></span> Consultar</button>
+                        <button type="button" [disabled]="!cidadeSelecionada" (click)="voltarDatas()" class="btn btn-danger"><span
+                            class="fas fa-undo"></span> Desfazer</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+          </div>
 
-                      <p class="card-text"><span class="fas fa-users"></span> Max. Hóspedes: {{quarto.qtdhospedes}}</p>
-                      <p class="card-text"><span class="fas fa-clock"></span> Entrada - {{quarto.checkin}}</p>
-                      <p class="card-text"><span class="fas fa-clock"></span> Saída: {{quarto.checkout}}</p>
-                      <a class="links"><span title="detalhes" (click)="detalhar(quarto.imagens)" style="margin-right: 2%"
-                          class="fas fa-images fa-2x"></span></a>
-                      <a class="links"><span title="escolher" (click)="selecionar(quarto)" class="fas fa-check-circle fa-2x"></span></a>
+        <div class="form-group" *ngIf="exibirQuartos">
+
+          <hr>
+
+          <input type="checkbox" id="ar" #ar (click)="arCondicionado(ar.checked)" aria-label="Checkbox for following text input"> Ar condicionado
+
+
+          <p-accordion *ngFor="let quarto of quartosFilter">
+            <br>
+            <p-accordionTab header="{{quarto.nomeempresa}} - A partir de - {{quarto.maisbarato | currency:'R$':'symbol':'':'pt-BR'}} a diária ">
+              <b>
+                <p><span class="fas fa-clock"></span> Entrada (Check-in): {{quarto.checkin}}</p>
+                <p><span class="fas fa-clock"></span> Saída (Check-out): {{quarto.checkout}}</p>
+              </b>
+              <div class="card card-hotel" *ngFor="let tipo of quarto.tipoquartos" style="margin-top: 1%;margin-bottom: 1%">
+
+                <div class="card-header">
+                  {{tipo.tipoquarto}}
+                  <span style="margin-left:1%" (click)="exibirInformacao(tipo)" title="mais informações sobre esse tipo de quarto"
+                    class="fas fa-info-circle fa-2x"></span>
+                  <span style="margin-left:1%" title="mais informações sobre esse tipo de quarto" class="fas fa-images fa-2x"></span>
+
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-3" *ngFor="let q of tipo.quartos">
+                      <div class="card card-hotel" style="max-width: 18rem !important;margin-bottom: 4%; margin-left: 2%;">
+                        <div class="card-header" style="cursor: pointer">
+                          Quarto - {{q.quarto}} | Andar: {{q.andar
+                          == '0' ? 'Térreo' : q.andar +'° andar'}}
+                        </div>
+                        <div class="card-body">
+                          <button class="btn btn-success" (click)="selecionar(q)"> {{q.valor |
+                            currency:'R$':'symbol':'':'pt-BR'}} <span title="escolher" class="fas fa-check-circle fa-2x"></span>
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div> -->
+            </p-accordionTab>
+          </p-accordion>
+
+          <hr>
         </div>
       </div>
     </div>

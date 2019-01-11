@@ -119,6 +119,7 @@
     position:relative;
     top: -20px;
     left: -35px;
+    font-size: xx-small;
  }
 
  .dropdown.show .dropdown-menu {
@@ -146,3 +147,4 @@
   background-color: white !important;
   color:#003580 !important;
 }
+

@@ -296,19 +296,25 @@ ValidarNumerosDecimais(valor){
   }
 
   ValidadorNumeroMaiorQue0 (c:AbstractControl) : {[key:string]:boolean} | null{
-    var valor = c.value.toString().replace(",",".");
-    if (!isNaN(valor)){
-      if (valor > 0){
-        return null;
+    if (c.value == "" || c.value == undefined || c.value == null){
+      return {maiorquezero:true};
+    }
+    else{
+      var valor = c.value.toString().replace(",",".");
+      if (!isNaN(valor)){
+        if (valor > 0){
+          return null;
+        }
+        else{
+          return {maiorquezero:true};
+        }
+
       }
       else{
         return {maiorquezero:true};
       }
+    }
 
-    }
-    else{
-      return {maiorquezero:true};
-    }
   }
 
   ValidarDatasEmRange (c:AbstractControl) : {[key:string]:boolean} | null {

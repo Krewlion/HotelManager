@@ -15,8 +15,8 @@ import swal from 'sweetalert2';
 })
 
 export class Servicos{
-  //url:string = 'http://herbertmauadie-001-site4.ctempurl.com/api/';
-  url:string = 'https://localhost:44354/api/';
+  url:string = 'http://herbertmauadie-001-site4.ctempurl.com/api/';
+  //url:string = 'https://localhost:44354/api/';
   //url:string = 'http://sf72506:8070/api/';
   constructor(private menu:MenuService, private http:HttpClient, private loading:LoadingService, private sweet: SweetalertService, private route:Router, private location:Location) {
 

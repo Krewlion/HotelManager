@@ -1,0 +1,151 @@
+<form>
+  <div class="painel">
+
+    <body>
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <h4 class="panel-title">Meus Perfil</h4>
+        </div>
+        <div class="panel-body">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h4 class="panel-title">Meus Dados</h4>
+            </div>
+            <div class="panel-body" *ngIf="usuario != undefined">
+
+              <div class="form-group" *ngIf="usuario != undefined">
+                <div class="row">
+                  <div class="col-md-4">
+                    <label for="cpf">CPF:</label>
+                    {{usuario.cpf}}
+                  </div>
+                  <div class="col-md-4">
+                    <label>Login:</label>
+                    {{usuario.loginusuario}}
+                  </div>
+                  <div class="col-md-4">
+                    <label for="data">Nome:</label>
+                    {{usuario.nomeusuario}}
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <label for="data">Email:</label>
+                    {{usuario.email}}
+                  </div>
+                  <div class="col-md-4">
+                    <label for="data">Data Nascimento:</label>
+                    {{usuario.datanascimento}}
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h4 class="panel-title">Meus Cartões</h4>
+            </div>
+            <div class="panel-body">
+
+              <div class="form-group" *ngIf="cartoes.length > 0">
+
+                  <table class="table table-striped table-responsive">
+                      <thead class="thead-dark">
+                        <tr>
+                          <th scope="col">Número <span class="fas fa-credit-card"></span></th>
+                          <th scope="col">Vencimento <span class="fas fa-calendar"></span></th>
+                          <th scope="col">Titular <span class="fas fa-user"></span></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let c of cartoes  | paginate: { itemsPerPage: 5, currentPage: p }">
+                          <td>
+                            {{c.numerocartao}}
+                          </td>
+                          <td>
+                            {{c.datavencimento}}
+                          </td>
+                          <td>
+                            {{c.nomecartao}}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <pagination-controls  responsive="true" (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Próximo"></pagination-controls>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-primary">
+              <div class="panel-heading">
+                <h4 class="panel-title">Minhas Reservas</h4>
+              </div>
+              <div class="panel-body">
+
+                <div class="form-group" *ngIf="reservas.length > 0">
+
+                  <!-- <div class="row" *ngFor="let r of reservas">
+                    <div class="col-md-2">
+                      <span class="fas fa-calendar"></span> {{r.dataentrada}}
+                    </div>
+                    <div class="col-md-2">
+                      <span class="fas fa-calendar"></span> {{r.datasaida}}
+                    </div>
+                    <div class="col-md-2">
+                      <span class="fas fa-build"></span> {{r.hotel}}
+                    </div>
+                    <div class="col-md-4">
+                        <span class="fas fa-build"></span> {{r.tipoquarto}}
+                      </div>
+                    <div class="col-md-2">
+                        <span class="fas fa-money"></span> {{r.valor |
+                          currency:'R$':'symbol':'':'pt-BR'}}
+                      </div>
+                  </div> -->
+
+                  <table class="table table-striped table-responsive">
+                      <thead class="thead-dark">
+                        <tr>
+                          <th scope="col">Entrada <span class="fas fa-calendar"></span></th>
+                          <th scope="col">Saída <span class="fas fa-calendar"></span></th>
+                          <th scope="col">Hotel</th>
+                          <th scope="col">Tipo Quarto</th>
+                          <th scope="col">R$ <span class="fas fa-money"></span></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let r of reservas  | paginate: { itemsPerPage: 5, currentPage: p }">
+                          <td>
+                            {{r.dataentrada}}
+                          </td>
+                          <td>
+                            {{r.datasaida}}
+                          </td>
+                          <td>
+                            {{r.hotel}}
+                          </td>
+                          <td>
+                            {{r.tipoquarto}}
+                          </td>
+                          <td>
+                            {{r.valor |
+                              currency:'R$':'symbol':'':'pt-BR'}}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <pagination-controls  responsive="true" (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Próximo"></pagination-controls>
+
+
+                </div>
+              </div>
+            </div>
+
+        </div>
+      </div>
+    </body>
+    <input formControlName="idusuariocripto" type="hidden">
+  </div>
+</form>

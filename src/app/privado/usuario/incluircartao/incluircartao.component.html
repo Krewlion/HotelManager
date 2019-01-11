@@ -10,13 +10,13 @@
                 <div class= "row">
                     <div class= "col-md-4">
                         <label for = "cpf">Numero Cartão:</label>
-                        <input type = "text" formControlName = "numerocartao" placeholder="Número do Cartão" class= "form-control">
+                        <input type = "text" formControlName = "numerocartao" autocomplete="cc-number" id="cc-number" ccNum class= "form-control">
                         <div class="text-danger" [innerHTML] = "erroNumerocartao" ></div>
                     </div>
                     <div class= "col-md-4">
                         <label for = "rg">Vencimento:</label>
-                        <input type = "text" formControlName = "datavencimento" placeholder="mm/aaaa" class= "form-control">
-                        <div class="text-danger" mask="00/0000" [innerHTML] = "erroDatavencimento" ></div>
+                        <input type = "text" mask='00/0000' [dropSpecialCharacters]="false" formControlName = "datavencimento" placeholder="mm/aaaa" class= "form-control">
+                        <div class="text-danger" [innerHTML] = "erroDatavencimento" ></div>
                     </div>
                     <div class= "col-md-4">
                         <label for = "data">Titular:</label>
@@ -39,7 +39,6 @@
             </div>
           </div>
       </body>
-      <input formControlName="subcontratos" type="hidden">
-      <input formControlName="idusuariologado" type="hidden">
+      <input formControlName="idusuariocripto" type="hidden">
     </div>
   </form>

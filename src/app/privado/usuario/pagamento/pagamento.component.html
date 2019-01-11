@@ -1,71 +1,105 @@
 <form [formGroup]="formPagamento" (ngSubmit)="realizarPagamento()">
-    <div class="painel">
+  <div class="painel">
 
-      <h1>Meus Cartões <span class="fas fa-credit-card"></span></h1>
-      <body  style="padding-top: 2%;">
-        <div *ngIf="cartoes.length <= 0">
-            <div class="panel panel-danger">
-                <div class="panel-heading">
-                  <h2 class="panel-title">
-                    Cartões de Crédito <span class="fas fa-credit-cart"></span>
-                  </h2>
-                </div>
-                <div class="panel-body">
-                  <div class="form-group">
-                    <h3 class="text-danger"> Infelizmente você não possui nenhum cartão cadastrado. </h3>
-                    <h4 class="text-danger" >Para incluir um cartão clique <a routerLink="/privado/usuario/incluircartao"> aqui <span class="fas fa-plus"></span> </a></h4>
-                  </div>
-                </div>
-            </div>
-        </div>
-
-        <div *ngIf="cartoes.length > 0">
-          <div class="row">
-            <div class="col-md-9">
-              <div class="row" *ngFor="let c of cartoes">
-                <div class="col-md-2">
-                  <span title="" class="fas fa-calendar"></span> {{c.numerocartao}}
-                </div>
-                <div class="col-md-2">
-                  <span title="Saída" class="fas fa-calendar"></span> {{c.datavencimento}}
-                </div>
-                <div class="col-md-2">
-                    <span title="Hotel" class="fas fa-calendar"></span> {{c.nomecartao}}
-                  </div>
-              </div>
-
-            </div>
-            <div class="col-md-3">
-              <div class="card card-hotel" style="width: 18rem;margin-bottom: 4%; margin-left: 2%;">
-                <div class="card-header">
-                  Resumo do Pedido
-                </div>
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="card-body">
-                      <p class="card-text"> <span class="fas fa-money"></span> {{carrinho.carrinhos.diarias * carrinho.carrinhos.valor |
-                        currency:'R$':'symbol':'':'pt-BR'}}</p>
-                      <hr>
-                      <p class="card-text" ><span class="fas fa-money"></span> {{totaldopedido | currency:'R$':'symbol':'':'pt-BR'}}</p>
-                    </div>
-                  </div>
-                </div>
-                <hr>
-                <div class="card-footer">
-                  <button type="submit" class="btn btn-success">Finalizar Reserva</button>
-                </div>
-              </div>
+    <body style="padding-top: 2%;">
+      <div *ngIf="cartoes.length <= 0">
+        <div class="panel panel-danger">
+          <div class="panel-heading">
+            <h2 class="panel-title">
+              Cartões de Crédito <span class="fas fa-credit-card"></span>
+            </h2>
+          </div>
+          <div class="panel-body">
+            <div class="form-group">
+              <h4 class="dext-danger"> Infelizmente você não possui nenhum cartão cadastrado. </h4>
+              <h4 class="text-danger">Para incluir um cartão clique <a routerLink="/privado/usuario/incluircartao">
+                  aqui <span class="fas fa-plus"></span> </a></h4>
             </div>
           </div>
         </div>
-      </body>
-    </div>
+      </div>
 
-    <input type = "hidden" formControlName="idcliente" >
-    <input type = "hidden" formControlName="idquarto" >
-    <input type = "hidden" formControlName="valor" >
-    <input type = "hidden" formControlName="dataentrada" >
-    <input type = "hidden" formControlName="datasaida" >
-    <input type = "hidden" formControlName = "idusuariocripto" >
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <h4 class="panel-title">Meus Cartões <span class="fas fa-credit-card"></span></h4>
+        </div>
+        <div class="panel-body">
+          <div class="form-group">
 
-  </form>
+            <div *ngIf="cartoes.length > 0">
+              <div class="row">
+                <div class="col-md-9">
+
+                    <table class="table table-striped table-responsive">
+                        <thead class="thead-dark">
+                          <tr>
+                            <th></th>
+                            <th scope="col">Número <span class="fas fa-credit-card"></span></th>
+                            <th scope="col">Vencimento <span class="fas fa-calendar"></span></th>
+                            <th scope="col">Titular <span class="fas fa-user"></span></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let c of cartoes  | paginate: { itemsPerPage: 5, currentPage: p }">
+                            <td>
+                                <div class="radio">
+                                    <label><input type="radio" (click)="radioChecked(c.idusuariocartao)" name="optradio"></label>
+                                </div>
+                            </td>
+                            <td>
+                              {{c.numerocartao}}
+                            </td>
+                            <td>
+                              {{c.datavencimento}}
+                            </td>
+                            <td>
+                              {{c.nomecartao}}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <pagination-controls  responsive="true" (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Próximo"></pagination-controls>
+                  <br>
+                  <br>
+                  <button (click)="adicionarBotao()" class="btn btn-info"> Adicionar Cartão <span class="fas fa-plus"></span>
+                  </button>
+
+                </div>
+                <div class="col-md-3">
+                  <div class="card card-hotel" style="width: 18rem;margin-bottom: 4%; margin-left: 2%;">
+                    <div class="card-header">
+                      Resumo do Pedido
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="card-body">
+                          <p class="card-text"> <span class="fas fa-money"></span> {{carrinho.carrinhos.diarias *
+                            carrinho.carrinhos.valor |
+                            currency:'R$':'symbol':'':'pt-BR'}}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <hr>
+                    <div class="card-footer">
+                      <button type="submit" class="btn btn-success">Finalizar Reserva</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </body>
+  </div>
+
+  <input type="hidden" formControlName="idcliente">
+  <input type="hidden" formControlName="idquarto">
+  <input type="hidden" formControlName="valor">
+  <input type="hidden" formControlName="dataentrada">
+  <input type="hidden" formControlName="datasaida">
+  <input type="hidden" formControlName="idusuariocripto">
+
+</form>

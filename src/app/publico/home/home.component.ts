@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { ValidadorService } from 'src/app/shared/servicos/validador.service';
 import { debounceTime, map } from 'rxjs/operators';
@@ -42,7 +42,13 @@ export class HomeComponent implements OnInit {
   cidadesSub: any[] = [];
   cidade: ICidade = <ICidade>{};
   quartos: any[] = [];
+  quartosFilter: any[] = [];
+  valorAntigo:any[] = undefined;
   en: any;
+
+  arcondicionado:boolean = false;
+
+  @ViewChild('date') datePicker;
 
   erroDataInicial: string = "";
   erroCidade: string = "";
@@ -103,8 +109,20 @@ export class HomeComponent implements OnInit {
       cidade: ["", [Validators.required]],
       date: ["", Validators.required],
       nomehotel: [""],
-      qtdhospedes: ["1", this.validador.ValidadorNumeroMaiorQue0]
+      qtdhospedes: ["1", [Validators.required , this.validador.ValidadorNumeroMaiorQue0]]
     });
+  }
+
+  closeCalendar(){
+    this.datePicker.overlayVisible = false;
+    this.datePicker.datepickerClick = true
+    if (this.datePicker.mask) {
+      this.datePicker.disableModality();
+    }
+    this.datePicker.onClearClick.emit(event);
+    var element = document.getElementsByClassName("ui-widget-overlay")[0] as HTMLElement;
+    element.classList.remove("ui-widget-overlay");
+    element.classList.remove("ui-datepicker-mask-scrollblocker");
   }
 
   reiniciarFormCidade() {
@@ -113,7 +131,7 @@ export class HomeComponent implements OnInit {
       cidade: ["", [Validators.required]],
       date: this.formReservas.get('date'),
       nomehotel: [""],
-      qtdhospedes: [this.formReservas.get("qtdhospedes").value, this.validador.ValidadorNumeroMaiorQue0]
+      qtdhospedes: [this.formReservas.get("qtdhospedes").value, [Validators.required , this.validador.ValidadorNumeroMaiorQue0]]
     });
   }
 
@@ -123,7 +141,7 @@ export class HomeComponent implements OnInit {
       cidade: [cidade.value, Validators.required ],
       date: ["", Validators.required],
       nomehotel: [""],
-      qtdhospedes: [this.formReservas.get("qtdhospedes").value, this.validador.ValidadorNumeroMaiorQue0]
+      qtdhospedes: [this.formReservas.get("qtdhospedes").value, [Validators.required , this.validador.ValidadorNumeroMaiorQue0]]
     });
   }
 
@@ -222,7 +240,7 @@ export class HomeComponent implements OnInit {
     this.router.navigate(["empresa/sobre/" + idempresa]);
   }
 
-  pesquisarDatas() {
+  pesquisarDatas(resetarfiltros:boolean) {
     this.loading.conteudo = "Aguarde enquanto os quartos estão sendo consulados.";
     this.loading.exibirLoading();
     var datas = this.formReservas.get("date").value;
@@ -230,16 +248,19 @@ export class HomeComponent implements OnInit {
     datas.forEach(element => {
       data.push(element);
     });
-    this.http.get(this.ser.retornarURL() + "Reserva/PesquisarQuartosParaReservaPelaData?datas=" + datas + "&cdcidade=" + this.endereco.cdcidade + "&cdbairro=" + this.endereco.cdbairro + "&hotel=" + this.formReservas.get("nomehotel").value + "&hospedes=" + this.formReservas.get("qtdhospedes").value)
+
+    this.http.get(this.ser.retornarURL() + "Reserva/PesquisarQuartosParaReservaPelaData?datas=" + datas + "&cdcidade=" + this.endereco.cdcidade + "&cdbairro=" + this.endereco.cdbairro + "&hotel=" + this.formReservas.get("nomehotel").value + "&hospedes=" + this.formReservas.get("qtdhospedes").value+"&arcondicionado="+this.arcondicionado)
       .subscribe((resultado: any) => {
         if (resultado.erros == undefined) {
 
           if (resultado.length > 0) {
+            this.quartosFilter = resultado;
             this.quartos = resultado;
             this.exibirQuartos = true;
           }
           else {
             this.quartos = undefined;
+            this.quartosFilter = undefined;
             this.sweet.ExibirMensagemAviso("Nenhum quarto disponível foi encontrado com os parametros passados.");
           }
         }
@@ -256,8 +277,18 @@ export class HomeComponent implements OnInit {
         ,
         () => {
           this.loading.esconderLoading();
+          if (resetarfiltros){
+            this.resetarFiltros();
+          }
         }
       )
+  }
+
+  resetarFiltros(){
+    let check:HTMLInputElement = document.getElementById('ar') as HTMLInputElement;
+    if (check != undefined){
+      check.checked = false;
+    }
   }
 
   detalhar(imagens: string[]) {
@@ -270,7 +301,6 @@ export class HomeComponent implements OnInit {
   }
 
   exibirInformacao(tipo:any){
-    console.log(tipo);
     this.sweet.ExibirInformaçãoTipoQuarto(tipo);
   }
 
@@ -303,8 +333,16 @@ export class HomeComponent implements OnInit {
         this.router.navigate(["/carrinho"]);
       }
     })
+  }
 
-
+  arCondicionado(evento:boolean){
+    if (evento) {
+      this.arcondicionado = true;
+      this.pesquisarDatas(false);
+    }else{
+      this.arcondicionado = false;
+      this.pesquisarDatas(false);
+    }
   }
 
 }

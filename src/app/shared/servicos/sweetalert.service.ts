@@ -15,7 +15,7 @@ import { LoadingService } from 'src/app/shared/loading/loading.service';
 })
 export class SweetalertService {
 
-  constructor() { }
+  constructor(private http:HttpClient) { }
 
   images:any[];
 
@@ -173,6 +173,23 @@ export class SweetalertService {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Sim, adicionar!'
     })
+  }
+
+  ConfirmaçãoPagamento(){
+    return swal({
+      title: 'Digite o código CVV do seu cartão',
+      input: 'text',
+      inputAttributes: {
+        autocapitalize: 'off'
+      },
+      showCancelButton: true,
+      confirmButtonText: 'Finalizar',
+      showLoaderOnConfirm: true,
+      preConfirm: (cvv) => {
+        return cvv
+      },
+      allowOutsideClick: () => !swal.isLoading()
+    });
   }
 
   ExibirConfirmacaoCadastrar(){
